@@ -1,0 +1,68 @@
+<nav>
+  <div class='b-navbar-container'>
+    <!-- LOGO -->
+    <div class='b-logo-container'>
+      <a routerLink="/">
+        <img src="/media/logo.jpg">
+      </a>
+    </div>
+    <!-- MENU -->
+    <div class='b-menu-container'>
+      <ul>
+        <li *ngFor="let menuItem of menuItems" (mouseenter)="menuItem.showSubtags = true" (mouseleave)="menuItem.showSubtags = false">
+          <div class="b-menu-item">
+            <a routerLink='/tag/{{menuItem.tag}}' routerLinkActive='b-active-link'>{{menuItem.tag}}</a>
+          </div>
+          <div class="b-dropdown-content" *ngIf="menuItem.showSubtags && menuItem.subtags.length > 0">
+            <a class="b-dropdown-item" *ngFor="let subtag of menuItem.subtags" routerLink='/tag/{{subtag}}' routerLinkActive='b-active-link'>{{subtag}}</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- ICONS -->
+    <div class="b-icons-container">
+      <div class="b-icon-container" (mouseleave)="showTagsList = false">
+        <div class="b-icon" (click)="showTagsList = true">
+          <i class="fas fa-tag"></i>
+        </div>
+        <div class="b-dropdown-tags" *ngIf="showTagsList">
+          <span class="b-dropdown-tag" *ngFor="let tag of tags"><a [routerLink]="['/tag', tag]" routerLinkActive='b-active-link'>{{tag}}</a></span>
+        </div>
+      </div>
+      <div class="b-icon-container">
+        <a href="https://vk.com/nastjazhukova" target="_blank">
+            <span class="b-icon">
+                <i class="fab fa-vk" aria-hidden='true'></i>              
+            </span>
+          </a>
+      </div>
+      <div class="b-icon-container">
+        <a href="https://www.instagram.com/zhuzhublog/" target="_blank">
+            <span class="b-icon">
+              <i class="fab fa-instagram" aria-hidden='true'></i>
+            </span>
+          </a>
+      </div>
+      <div class="b-icon-container">
+          <a href="https://www.youtube.com/channel/UCe3OnqR0rnKkHb57_8zLMAQ" target="_blank">
+              <span class="b-icon">
+                <i class="fab fa-youtube" aria-hidden='true'></i>
+              </span>
+            </a>
+        </div>
+      <!-- <div class="b-icon-container">
+        <span class="b-icon">
+          <i class="fas fa-search"></i>
+        </span>
+      </div> -->
+      <!-- Temporary -->
+      <!-- <div class="b-icon-container">
+        <span class="b-icon">
+          <a routerLink='/administrator' routerLinkActive='b-active-link'>
+            <i class="fas fa-lock"></i>
+          </a>
+        </span>
+      </div> -->
+    </div>
+  </div>
+</nav>

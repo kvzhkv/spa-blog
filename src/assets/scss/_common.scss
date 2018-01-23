@@ -1,0 +1,49 @@
+
+.b-col-1 {
+  width: 100%;
+}
+
+.b-col-2 {
+  width: 50%;
+}
+
+.b-col-3 {
+  width: calc(100% / 3);
+}
+
+.b-posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  .b-post-container {
+    box-sizing: border-box;
+    font-family: $main-font;
+    font-weight: 300;
+    position: relative;
+    margin: 20px;
+    border-bottom: 1px solid $lines-color;
+  }
+}
+
+.b-active-link {
+  color: $active-link-color;
+  cursor: default;
+  text-decoration: none;
+}
+
+.b-main-container {
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: $main-container-width;
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+
+.b-svg-icon {
+  width: 30px;
+  height: 30px;
+  color: inherit;
+}

@@ -1,0 +1,21 @@
+<ul class="b-file-tree">
+  <li *ngFor="let item of items">
+    <i class="fa" *ngIf="item.type === 'directory'" 
+    [ngClass]="{'fa-caret-right': !item.open, 'fa-caret-down': item.open}" 
+    (click)="item.open = !item.open"></i>
+    <span (click)="pick(item)">
+    <i class="fa" *ngIf="item.type === 'directory'" 
+    [ngClass]="{'fa-folder b-folder-icon': !item.open, 'fa-folder-open': item.open}"></i>
+    <i class="fa fa-file b-file-icon" *ngIf="item.type === 'file'"></i> 
+    <span [ngClass]="{'b-tree-selected-item': item === selectedItem}">
+      {{item.name}}
+    </span>
+    <span *ngIf="item === selectedItem">
+      <i class="fa fa-trash"></i>
+    </span>
+    </span>
+    <blog-file-tree *ngIf="item.children && item.open" 
+    [items]="item.children" [selectedItem]="selectedItem" 
+    (pickItem)="pick($event)"></blog-file-tree>
+  </li>
+</ul>

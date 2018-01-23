@@ -1,0 +1,10 @@
+<div class="b-messages">
+  <div *ngFor='let message of messagesStream; index as i' class="b-message" [@flyInOut]="'in'">
+    <span [ngClass]="{'b-success-message': !message.isError ,'b-error-message': message.isError}">
+      <i class="fa" [ngClass]="{'fa-check': !message.isError ,'fa-times': message.isError}"></i>{{message.message}}
+    </span>
+    <a (click)=cleanUpMessage(i)>
+      <i class="fa fa-times"></i>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="b-login-container">
+  <div class="b-login">
+    <!-- <h3>Login</h3> -->
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
+      <div class="b-login-input b-has-error" [ngClass]="{'b-has-error': (loginForm.controls.username.touched || 
+                                                loginForm.controls.username.dirty) &&
+                                                !loginForm.controls.username.valid }">
+        <input autofocus autocomplete="true"  class="b-input-username" type="text" name="username" placeholder="username" formControlName="username">
+        <!-- <span *ngIf="emailMessage" class="validmessage">{{emailMessage}}</span> -->
+      </div>
+      <div class="b-login-input" [ngClass]="{'b-has-error': (loginForm.controls.password.touched || 
+                                                loginForm.controls.password.dirty) &&
+                                                !loginForm.controls.password.valid }">
+        <input autocomplete="true" class="b-input-pass" type="password" #passwordInput placeholder="password" formControlName="password">
+        <button type="button" class="b-btn-small" aria-hidden="true" (mousedown)="showPassword(passwordInput)" (mouseup)="hidePassword(passwordInput)">
+          <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+        </button>
+        <!-- <span *ngIf="capsLockIsOn" style="color: red"><i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i><b>Caps Lock is ON!</b></span> -->
+      </div>
+      <div class="b-login-button-container">
+        <button class="b-btn b-btn-text b-btn-primary" type="submit" [disabled]="!loginForm.valid">
+          <i class="fa fa-arrow-right"></i>
+        </button>
+      </div>
+    </form>
+    <!-- <div>
+      <p>Dirty: {{ loginForm.dirty }}</p>
+      <p>Touched: {{ loginForm.touched }}</p>
+      <p>Valid: {{ loginForm.valid }}</p>
+      <p>Value: {{ loginForm.value | json}}</p>
+    </div> -->
+  </div>
+</div>

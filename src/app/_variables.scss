@@ -1,0 +1,38 @@
+// Fonts
+$main-font: 'Open Sans';
+$headers-font: 'Montserrat';
+$text-font: 'Cormorant Garamond';
+// Font-colors
+$main-font-color: #616161;
+$active-link-color: #d79c6a;
+$tag-color: #d79c6a;
+$btn-font-color: #fff;
+
+
+// Colors
+$navbar-background: #f2f2f2;
+$footer-background: #f2f2f2;
+$dashboard-background: #f2f2f2;
+$lines-color: #e6e6e6;
+$image-manager-background: #f2f2f2;
+
+// Buttons
+$btn-primary-color: #007bff;
+// $btn-primary-hover: #0069d9;
+$btn-secondary-color: #868e96;
+// $btn-secondary-hover: #727b84;
+$btn-success-color: #28a745;
+// $btn-success-hover: #218838;
+$btn-danger-color: #dc3545;
+// $btn-danger-hover: #c82333;
+
+// Sizes
+$navbar-height: 60px;
+$footer-height: 40px;
+$main-container-width: 1200px;
+$logo-height: 50px;
+$logo-width: $logo-height / 1.16;
+$favorite-width: $main-container-width / 4;
+$social-icon-height: 25px;
+$social-icon-width: $social-icon-height / 1.16;
+

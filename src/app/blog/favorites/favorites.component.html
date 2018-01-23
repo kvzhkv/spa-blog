@@ -1,0 +1,12 @@
+<div class="b-favorites-block">
+  <div class="b-favorite-container" *ngFor="let favorite of favorites">
+    <a class="b-a-wrap" [routerLink]="['/posts', favorite.id]" [ngStyle]="{'background-image': 'url(' + favorite.value.imageUrl + ')'}">
+      <!-- <div class="b-image-wrap">
+        <img src={{favorite.value.imageUrl}}>
+      </div> -->
+    </a>
+    <h2>
+      <a [routerLink]="['/posts', favorite.id]">{{favorite.value.title}}</a>
+    </h2>
+  </div>
+</div>

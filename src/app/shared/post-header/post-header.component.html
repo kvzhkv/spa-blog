@@ -1,0 +1,14 @@
+<div class="b-single-post-tags-container">
+  <span *ngFor="let tag of tags; last as isLast" class="b-tag">
+    <a [routerLink]="['/tag', tag]">{{tag}}</a><span *ngIf="!isLast">,</span>
+  </span>
+</div>
+<h1>{{title}}</h1>
+<div class="b-postview-info">
+  <span>
+    {{date | date:'mediumDate'}}
+  </span>
+  <!-- <span>
+      <i class="fa fa-comment-o"></i>
+    </span> -->
+</div>

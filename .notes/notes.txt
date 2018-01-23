@@ -1,0 +1,12 @@
+post document:
+  id
+  rev
+  type
+  post:
+    title
+    text
+    tags
+    author?
+    date
+  published
+  

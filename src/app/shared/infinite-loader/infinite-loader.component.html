@@ -1,0 +1,8 @@
+<div class="b-infinite-loader-container">
+  <div *ngIf="loading">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw" style="color: grey"></i>
+  </div>
+  <button type="button" class="b-btn b-btn-icon b-btn-secondary" *ngIf="loadedPages !== totalPages && !loading && !scrollEvents" (click)="activateInfiniteScroll()">
+    <i class="fa fa-angle-down"></i>
+  </button>
+</div>

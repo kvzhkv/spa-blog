@@ -1,0 +1,77 @@
+<div class="b-full-post-container">
+  <form (ngSubmit)="savePost()" [formGroup]="editPostForm" class="b-edit-post-form">
+    <!-- IMAGE -->
+    <div class="b-image-field">
+      <div class="b-empty-image" *ngIf="!editPostForm.controls.imageUrl.valid">
+        <blog-media-manager [editPostMode]=true (selectFile)="onSelectedFile($event)"></blog-media-manager>
+      </div>
+      <div class="b-shown-image" *ngIf="editPostForm.controls.imageUrl.valid">
+        <img src="{{editPostForm.controls.imageUrl.value}}" alt="image">
+        <span class="fa-stack b-close-image-button" (click)="clearImageInput()">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-times fa-inverse fa-stack-1x"></i>
+        </span>
+      </div>
+    </div>
+    <!-- PREVIEW MODE -->
+    <div *ngIf="!editMode" class="b-preview" (mouseenter)="editPostForm.showEditHeaderButton = true" (mouseleave)="editPostForm.showEditHeaderButton = false">
+      <blog-post-header [title]="editPostForm.controls.title.value" [tags]="editPostForm.controls.tags.value" [date]="editPostForm.controls.date.value"></blog-post-header>
+      <div *ngIf="editPostForm.controls.cut.value" class="b-cut-preview">
+        {{editPostForm.controls.cut.value}}
+      </div>
+      <div class="b-edit-button-container" *ngIf="editPostForm.showEditHeaderButton">
+        <button type="button" (click)="editMode = true" class="b-btn b-btn-icon b-btn-primary">
+          <i class='fas fa-pencil-alt'></i>
+        </button>
+        <!-- <button type="button" (click)="editMode = true">EditMode</button> -->
+      </div>
+    </div>
+
+    <!-- EDIT MODE -->
+    <div *ngIf="editMode">
+      <!-- TAGS -->
+      <div formArrayName="tags" class="b-tags-edit-container">
+        <span *ngFor="let tagName of tagsFormArray.controls; let i = index" class="b-tag-input">
+          <input [formControlName]="i" placeholder="tag name">
+          <button type="button" class="b-btn-small" (click)=removeTag(i) *ngIf="tagsFormArray.controls.length>1">
+            <i class="fas fa-times"></i>
+          </button>
+        </span>
+        <button class="b-btn-small" (click)="addTag()" *ngIf="tagsFormArray.valid">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+      <!-- TITLE -->
+      <div class="b-title-input">
+        <input type="text" formControlName="title" placeholder="Title">
+      </div>
+      <!-- DATE -->
+      <div class="b-post-date b-post-date-input">
+        <input type="date" formControlName="date" useValueAsDate>
+      </div>
+      <!-- CUT -->
+      <div>
+        <textarea cols="25" rows="3" formControlName="cut" placeholder="Cut"></textarea>
+      </div>
+      <button type="button" class="b-btn b-btn-text b-btn-primary" *ngIf="editMode" [disabled]="!editPostForm.controls.date.valid || !editPostForm.controls.title.valid || !editPostForm.controls.tags.valid"
+        (click)="editMode = false">Preview</button>
+    </div>
+
+    <!-- TEXT -->
+    <div>
+      <div id="b-quill-editor"></div>
+    </div>
+    <!-- BUTTONS -->
+    <div class="b-btn-container">
+      <button class="b-btn b-btn-text b-btn-primary" type="submit" [disabled]="!editPostForm.valid">Save Post</button>
+      <button class="b-btn b-btn-text b-btn-secondary" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+  <div class="b-tech">
+    <p>Images: {{imagesToUpload | json}}</p>
+    <p>Touched: {{ editPostForm.touched }}</p>
+    <p>Valid: {{ editPostForm.valid }}</p>
+    <p>Dirty: {{ editPostForm.dirty}}</p>
+    <p>Value: {{editPostForm.value | json}}</p>
+  </div>
+</div>

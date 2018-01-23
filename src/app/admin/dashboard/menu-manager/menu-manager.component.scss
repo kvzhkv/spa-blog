@@ -1,0 +1,16 @@
+@import '~app/variables';
+.b-menu-man-form {
+  display: flex;
+  .b-menu-item {
+    border-bottom: 1px solid $lines-color;
+  }
+  input {
+    border: 0;
+    margin: 5px;
+  }
+  .b-border {
+    border-bottom: 1px solid $lines-color;
+    border-right: 1px solid $lines-color;
+    border-left: 1px solid $lines-color;
+  }
+}

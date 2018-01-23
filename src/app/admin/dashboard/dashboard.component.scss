@@ -1,0 +1,15 @@
+@import '~app/variables';
+
+.b-dashboard {
+  // background-color: $dashboard-background;
+  border-bottom: 1px solid $lines-color;
+  font-family: $main-font, serif, Times;
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  display: block;
+  margin-bottom: 10px;
+  a {
+    margin-right: 20px;
+  }
+}

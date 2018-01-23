@@ -1,0 +1,42 @@
+@import '~app/variables';
+.b-login-container {
+  width: 100%;
+  height: calc(100vh - 131px);
+  display: flex;
+  position: relative; // background-color: yellow;
+  .b-login {
+    margin: auto; // width: 300px;
+    display: flex;
+    // top: 50%;
+    .b-login-input {
+      display: inline-block;
+      margin-left: 5px; // padding: 5px;
+      border: 1px solid $lines-color;
+      border-radius: 5px;
+      padding-right: 3px;
+    }
+    input {
+      margin: 5px;
+      outline: none;
+      border: 0;
+    }
+    .b-input-username {
+      width: 156px;
+    }
+    .b-input-pass {
+      width: 130px;
+    }
+    .b-login-button-container {
+      display: inline-block;
+      button {
+        height: 29px;
+        vertical-align: middle;
+        padding: 0 5px;
+      }
+    }
+  }
+}
+
+.b-has-error {
+  // outline-color: red;
+}

@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: $main-font, 'Times New Roman', Times, serif;
+  margin: 0px;
+  display: block;
+  color: $main-font-color;
+}
+
+main {
+  display: block;
+  margin-bottom: 20px;
+  margin-top: 61px;
+  min-height: calc(100vh - 131px);
+}
+
+a {
+  text-decoration: none;
+  color: $main-font-color;
+}
+
+a:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: $main-font;
+}
+
+h1 {
+  font-family: $headers-font;  
+  text-transform: capitalize;
+  margin: 0 0 5px 0;
+  // text-align: center;
+  color: #505050;  
+}
+
+h2 {
+  font-family: $headers-font;
+  // text-align: center;
+  color: #505050;
+  line-height: 110%;
+  font-size: 1.7rem;
+  text-transform: capitalize;
+  font-weight: 700;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.4rem;
+}

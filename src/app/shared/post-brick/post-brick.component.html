@@ -1,0 +1,24 @@
+<div class="b-top-container">
+  <a routerLink="/posts/{{id}}" class="image-link">
+    <!-- [ngStyle]="{'background-image': 'url(' + post.value.imageUrl + ')'}"> -->
+    <img src={{post.imageUrl}}>
+  </a>
+</div>
+<div class="b-bottom-container">
+  <div class="b-tags-container">
+    <span *ngFor="let tag of post.tags; last as isLast" class="b-tag">
+      <a [routerLink]="['/tag', tag]" class="b-tag-link">{{tag}}</a><span *ngIf="!isLast">,</span>
+    </span>
+  </div>
+  <a routerLink="/posts/{{id}}">
+    <h2>
+      {{post.title}}
+    </h2>
+  </a>
+  <div class="b-text-cut">
+    <!-- <a routerLink="/posts/{{id}}"> -->
+      {{post.cut}}
+    <!-- </a> -->
+  </div>
+  <div class="b-post-date">{{post.date | date:'mediumDate'}}</div>
+</div>

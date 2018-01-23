@@ -1,0 +1,9 @@
+{
+  "couchdbUri": "http://localhost:5984/",
+  "blogDbName": "spa_blog",
+  "commentsDbName": "spa_blog_comments",
+  "dbUsername": "spa_blog_app",
+  "dbPassword": "123456",
+  "dbAdminUsername": "admin",
+  "dbAdminPassword": "couchdbadmin"
+}

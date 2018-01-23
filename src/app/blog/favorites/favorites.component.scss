@@ -1,0 +1,18 @@
+.b-favorites-block {
+  border-bottom: 1px solid $lines-color;
+  padding: 0 0 20px 0;
+  margin: 10px 0 20px 0;
+  .b-favorite-container {
+    display: inline-block;
+    width: $favorite-width - 30px;
+    padding: 0 15px 0 15px;
+    .b-a-wrap {
+      height: $favorite-width - 30px; // display: block;
+      width: $favorite-width - 30px;
+      display: block;
+      border-radius: 50%;
+      background-position: 50% 50%;
+      background-size: cover;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<div class='b-dashboard'>
+      <a routerLink='posts-manager' routerLinkActive='b-active-link'>
+        <i class="fas fa-th-large"></i>
+        POSTS MANAGER
+      </a>
+      <a routerLink='menu-manager' routerLinkActive='b-active-link'>
+        <i class="fas fa-bars"></i>
+        MENU MANAGER
+      </a>
+      <a routerLink='media-manager' routerLinkActive='b-active-link'>
+        <i class="fas fa-images"></i>
+        MEDIA MANAGER
+      </a>
+    <span *ngIf="authService.isAdminLoggedIn" (click)="logout()">
+      <a class="menuitem"><i class="fas fa-sign-out-alt"></i></a>
+    </span>
+</div>

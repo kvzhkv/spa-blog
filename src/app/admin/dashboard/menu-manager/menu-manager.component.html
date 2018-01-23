@@ -1,0 +1,47 @@
+<h3>
+  Menu Manager
+</h3>
+<form (ngSubmit)="saveMenu()" [formGroup]="editMenuForm">
+  <div class="b-menu-man-form">
+    <div formArrayName="menuItems" *ngFor="let tag of menuItems.controls; let i=index">
+      <div [formGroupName]="i">
+        <div class="b-menu-item">
+          <input formControlName="tag" placeholder="tag name">
+          <button type="button" class="b-btn-small" (click)=removeTag(i)>
+            <i class="fas fa-times">
+            </i>
+          </button>
+        </div>
+        <div formArrayName="subtags" class="b-border">
+          <div *ngFor="let subtag of menuItems.at(i).get('subtags').controls; let ii=index">
+            <input [formControlName]="ii" placeholder="subtag name">
+            <button type="button" class="b-btn-small" (click)="removeSubtag(ii, i)">
+              <i class="fas fa-times">
+              </i>
+            </button>
+          </div>
+          <div>
+            <button type="button" class="b-btn-small" (click)=addSubtag(i)>
+              <i class="fas fa-plus"></i>
+              Add subtag
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="b-btn-small" (click)=addTag()>
+        <i class="fa fa-plus"></i>
+        Add tag
+      </button>
+    </div>
+  </div>
+  <div>
+    <button type="submit" class="b-btn b-btn-text b-btn-primary" [disabled]="!editMenuForm.valid || !editMenuForm.dirty">Save Menu</button>
+    <!-- <button type="button">Cancel</button> -->
+  </div>
+</form>
+<p>Value: {{editMenuForm.value | json}}</p>
+<p>Touched: {{ editMenuForm.touched }}</p>
+<p>Valid: {{ editMenuForm.valid }}</p>
+<p>Dirty: {{ editMenuForm.dirty}}</p>

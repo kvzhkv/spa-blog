@@ -1,0 +1,89 @@
+
+.b-btn {
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 0;
+  cursor: pointer;
+  // color: $btn-font-color;
+  margin: 5px;
+  outline: none;
+  transition: background-color 0.35s, color 0.15s;
+  border: 1px solid $lines-color;
+}
+
+.b-btn:disabled {
+  color: rgb(235, 235, 235)!important;
+  background-color: #fff!important;
+  cursor: default;
+}
+
+// .b-btn:focus {
+//   // box-shadow: 0 0 0 0.2rem $lines-color;
+//   color: $tag-color;
+// }
+
+.b-btn:active {
+  // box-shadow: 0 0 0 0.2rem $lines-color;
+  color: $tag-color;  
+}
+
+.b-btn:hover {
+  background-color: $lines-color;
+}
+
+.b-btn-text {
+  border-radius: 4px;
+  font-size: 1.1rem;
+  padding: 10px;
+}
+
+.b-btn-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  border-radius: 50%;
+  padding: 0;
+  // display: flex;
+  // text-align: center;
+  i {
+    margin: auto;
+    // vertical-align: middle;
+  }
+}
+
+.b-btn-primary {
+  color: $btn-primary-color;
+}
+
+.b-btn-secondary {
+  color: $btn-secondary-color;
+}
+
+.b-btn-success {
+  color: $btn-success-color;
+}
+
+.b-btn-danger {
+  color: $btn-danger-color;
+}
+
+.b-btn-small {
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  // width: 15px;
+  // height: 15px;
+  border-radius: 3px;
+  border: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+  color: $main-font-color;
+  padding: 0;
+  margin: 1px;
+}
+
+.b-btn-small:hover {
+  color: $tag-color;
+}
