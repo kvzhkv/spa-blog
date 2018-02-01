@@ -10,28 +10,28 @@ import { NavbarService } from './navbar.service';
 
 export class NavbarComponent implements OnInit {
   public menuItems: {} = null;
-  public tags: string[] = null;
+  public info: {} = null;
+  // public tags: string[] = null;
+
+  // public showTagsList = false;
 
   constructor(private navbarService: NavbarService) { }
 
-  public showTagsList = false;
-
   ngOnInit() {
-    this.getMenuItems();
-    this.getTags();
+    this.getInfo();
+    // this.getTags();
   }
 
-  getMenuItems() {
-    this.navbarService.getMenuItems().subscribe(res => {
-      this.menuItems = res;
-    }, err => {
-      console.log(err); // FIXME: change console
+  getInfo() {
+    this.navbarService.getInfo().subscribe(res => {
+      this.menuItems = res.menuItems;
+      this.info = res.info;
     });
   }
 
-  getTags() {
-    this.navbarService.getTags().subscribe(res => {
-      this.tags = res;
-    });
-  }
+  // getTags() {
+  //   this.navbarService.getTags().subscribe(res => {
+  //     this.tags = res;
+  //   });
+  // }
 }

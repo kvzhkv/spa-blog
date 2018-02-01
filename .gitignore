@@ -9,6 +9,12 @@
 # dependencies
 /node_modules
 
+# notes
+/.notes
+
+# pm2 ecosystem
+ecosystem.config.js
+
 # IDEs and editors
 /.idea
 .project

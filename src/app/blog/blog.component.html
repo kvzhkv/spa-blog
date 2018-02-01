@@ -34,4 +34,4 @@
     </div>
   </div>
 </div>
-<blog-infinite-loader [loadedPages]="loadedPages" [totalPages]="totalPages" [loading]="loading" (trigger)="getPosts($event)"></blog-infinite-loader>
+<blog-infinite-loader [noPosts]="!posts.length" [loadedPages]="loadedPages" [totalPages]="totalPages" [loading]="loading" (trigger)="getPosts($event)"></blog-infinite-loader>

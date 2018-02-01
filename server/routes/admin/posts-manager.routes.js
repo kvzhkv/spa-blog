@@ -10,7 +10,11 @@ const {
   authenticateAdmin
 } = require('../../helpers/auth');
 
-const config = require('../../config/config.json');
+// const config = require('../../config/json');
+const couchdbUri = process.env.COUCH_DB_URL;
+const blogDbName = process.env.BLOG_DB_NAME;
+const dbUsername = process.env.DB_USERNAME;
+const dbPassword = process.env.DB_PASSWORD;
 
 const errorHandler = require('../../helpers/error-handler');
 const resMessages = require('../../helpers/res-messages');
@@ -19,11 +23,11 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   // TODO: validation
 
   rp.get({
-      uri: config.couchdbUri + config.blogDbName + `/_design/admin/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+      uri: couchdbUri + blogDbName + `/_design/admin/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
       json: true,
       auth: {
-        'user': config.dbUsername,
-        'pass': config.dbPassword
+        'user': dbUsername,
+        'pass': dbPassword
       },
       resolveWithFullResponse: true
     }).then((response) => {
@@ -45,11 +49,11 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   //TODO: do i need validation here?
   router.get('/posts/:id', authenticateAdmin, function (req, res, next) {
     rp.get({
-      uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+      uri: couchdbUri + blogDbName + '/' + req.params.id,
       json: true,
       auth: {
-        'user': config.dbUsername,
-        'pass': config.dbPassword
+        'user': dbUsername,
+        'pass': dbPassword
       },
       resolveWithFullResponse: true
     }).then((response) => {
@@ -70,11 +74,11 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
       }
   
       rp.post({
-        uri: config.couchdbUri + config.blogDbName,
+        uri: couchdbUri + blogDbName,
         json: true,
         auth: {
-          'user': config.dbUsername,
-          'pass': config.dbPassword
+          'user': dbUsername,
+          'pass': dbPassword
         },
         body: newPost,
         resolveWithFullResponse: true
@@ -95,11 +99,11 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
     if (req.body) {
       let updatedPost = req.body;
       rp.get({
-        uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+        uri: couchdbUri + blogDbName + '/' + req.params.id,
         json: true,
         auth: {
-          'user': config.dbUsername,
-          'pass': config.dbPassword
+          'user': dbUsername,
+          'pass': dbPassword
         },
         resolveWithFullResponse: true
       }).then((response) => {
@@ -108,11 +112,11 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
         post.post = updatedPost;
   
         return rp.put({
-          uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+          uri: couchdbUri + blogDbName + '/' + req.params.id,
           json: true,
           auth: {
-            'user': config.dbUsername,
-            'pass': config.dbPassword
+            'user': dbUsername,
+            'pass': dbPassword
           },
           body: post,
           resolveWithFullResponse: true
@@ -129,23 +133,23 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   
   router.delete('/posts/:id', authenticateAdmin, function (req, res, next) {
     rp.get({
-      uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+      uri: couchdbUri + blogDbName + '/' + req.params.id,
       json: true,
       auth: {
-        'user': config.dbUsername,
-        'pass': config.dbPassword
+        'user': dbUsername,
+        'pass': dbPassword
       },
       resolveWithFullResponse: true
     }).then((response) => {
       return rp.delete({
-        uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+        uri: couchdbUri + blogDbName + '/' + req.params.id,
         json: true,
         headers: {
           'If-Match': response.body._rev
         },
         auth: {
-          'user': config.dbUsername,
-          'pass': config.dbPassword
+          'user': dbUsername,
+          'pass': dbPassword
         },
         resolveWithFullResponse: true
       })
@@ -158,23 +162,23 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   
   router.put('/posts/publicate/:id', authenticateAdmin, function (req, res, next) {
     rp.get({
-      uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+      uri: couchdbUri + blogDbName + '/' + req.params.id,
       json: true,
       auth: {
-        'user': config.dbUsername,
-        'pass': config.dbPassword
+        'user': dbUsername,
+        'pass': dbPassword
       },
       resolveWithFullResponse: true
     }).then((response) => {
       let postDoc = response.body;
       postDoc.published = !postDoc.published;
       return rp.put({
-        uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+        uri: couchdbUri + blogDbName + '/' + req.params.id,
         json: true,
         body: postDoc,
         auth: {
-          'user': config.dbUsername,
-          'pass': config.dbPassword
+          'user': dbUsername,
+          'pass': dbPassword
         },
         resolveWithFullResponse: true
       })

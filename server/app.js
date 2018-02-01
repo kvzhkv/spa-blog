@@ -5,6 +5,8 @@ var logger = require('morgan');
 // var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var proxy = require('http-proxy-middleware');
+
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
@@ -27,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 }
 
-app.use(logger('dev'));
+app.use(logger('dev')); // TODO: как это работает и зачем?
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -35,14 +37,14 @@ app.use(bodyParser.urlencoded({
 }));
 // app.use(cookieParser());
 
-
-// FIXME: Only for dev
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "OPTIONS, HEAD, GET, POST, PUT, DELETE");
-  next();
-});
+if (process.env.NODE_ENV === 'development') {
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "OPTIONS, HEAD, GET, POST, PUT, DELETE");
+    next();
+  });
+}
 
 app.use(session({
   secret: '123456',
@@ -61,7 +63,12 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/media', express.static(path.join(__dirname, 'storage', 'media')));
+
+app.use('/media', proxy({
+  target: process.env.MINIO_URL
+}));
+
+// app.use('/media', express.static(path.join(__dirname, 'storage', 'media')));
 
 if (process.env.NODE_ENV === 'development') {
   app.use(function (req, res, next) {

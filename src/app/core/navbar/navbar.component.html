@@ -21,30 +21,37 @@
     </div>
     <!-- ICONS -->
     <div class="b-icons-container">
-      <div class="b-icon-container" (mouseleave)="showTagsList = false">
+      <!-- <div class="b-icon-container" (mouseleave)="showTagsList = false">
         <div class="b-icon" (click)="showTagsList = true">
           <i class="fas fa-tag"></i>
         </div>
         <div class="b-dropdown-tags" *ngIf="showTagsList">
           <span class="b-dropdown-tag" *ngFor="let tag of tags"><a [routerLink]="['/tag', tag]" routerLinkActive='b-active-link'>{{tag}}</a></span>
         </div>
+      </div> -->
+      <div class="b-icon-container" *ngIf="info?.facebookLink">
+        <a [href]=info.facebookLink target="_blank">
+            <span class="b-icon">
+                <i class="fab fa-facebook-f" aria-hidden='true'></i>              
+            </span>
+          </a>
       </div>
-      <div class="b-icon-container">
-        <a href="https://vk.com/nastjazhukova" target="_blank">
+      <div class="b-icon-container" *ngIf="info?.vkLink">
+        <a [href]=info.vkLink target="_blank">
             <span class="b-icon">
                 <i class="fab fa-vk" aria-hidden='true'></i>              
             </span>
           </a>
       </div>
-      <div class="b-icon-container">
-        <a href="https://www.instagram.com/zhuzhublog/" target="_blank">
+      <div class="b-icon-container" *ngIf="info?.instagramLink">
+        <a [href]=info.instagramLink target="_blank">
             <span class="b-icon">
               <i class="fab fa-instagram" aria-hidden='true'></i>
             </span>
           </a>
       </div>
-      <div class="b-icon-container">
-          <a href="https://www.youtube.com/channel/UCe3OnqR0rnKkHb57_8zLMAQ" target="_blank">
+      <div class="b-icon-container" *ngIf="info?.youtubeLink">
+          <a [href]=info.youtubeLink target="_blank">
               <span class="b-icon">
                 <i class="fab fa-youtube" aria-hidden='true'></i>
               </span>

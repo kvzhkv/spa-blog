@@ -3,25 +3,41 @@ const router = express.Router();
 const rp = require('request-promise');
 
 // const QuillDeltaToHtml = require('quill-delta-to-html');
-const Delta = require('quill-delta');
+// const Delta = require('quill-delta');
 
-const config = require('../config/config.json');
+const couchdbUri = process.env.COUCH_DB_URL;
+const blogDbName = process.env.BLOG_DB_NAME;
+const dbUsername = process.env.DB_USERNAME;
+const dbPassword = process.env.DB_PASSWORD;
+
+const blogAuthor = process.env.BLOG_AUTHOR;
+const instagramLink = process.env.INSTAGRAM_LINK;
+const facebookLink = process.env.FACEBOOK_LINK;
+const vkLink = process.env.VK_LINK;
+const youtubeLink = process.env.YOUTUBE_LINK;
 
 const errorHandler = require('../helpers/error-handler');
 const resMessages = require('../helpers/res-messages');
 
-router.get('/menu', function (req, res, next) {
+router.get('/info', function (req, res, next) {
   rp.get({
-    uri: config.couchdbUri + config.blogDbName + '/menu',
+    uri: couchdbUri + blogDbName + '/menu',
     json: true,
     auth: {
-      'user': config.dbUsername,
-      'pass': config.dbPassword
+      'user': dbUsername,
+      'pass': dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
     res.status(200).send({
-      "menuItems": response.body.menuItems
+      menuItems: response.body.menuItems,
+      info: {
+        blogAuthor,
+        instagramLink,
+        facebookLink,
+        vkLink,
+        youtubeLink
+      }
     });
   }).catch((error) => {
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
@@ -32,11 +48,11 @@ router.get('/posts', function (req, res, next) {
   // TODO: validation
 
   rp.get({
-    uri: config.couchdbUri + config.blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+    uri: couchdbUri + blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
     json: true,
     auth: {
-      'user': config.dbUsername,
-      'pass': config.dbPassword
+      'user': dbUsername,
+      'pass': dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -60,11 +76,11 @@ router.get('/postsbytag/:tag', function (req, res, next) {
   // console.log(tag);
   let encodedTag = encodeURIComponent(tag);
   rp.get({
-    uri: config.couchdbUri + config.blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
+    uri: couchdbUri + blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
     json: true,
     auth: {
-      'user': config.dbUsername,
-      'pass': config.dbPassword
+      'user': dbUsername,
+      'pass': dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -72,11 +88,11 @@ router.get('/postsbytag/:tag', function (req, res, next) {
     totalRows = response.body.rows[0] ? response.body.rows[0].value : 0;
     // console.log(totalRows)
     return rp.get({
-      uri: config.couchdbUri + config.blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+      uri: couchdbUri + blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
       json: true,
       auth: {
-        'user': config.dbUsername,
-        'pass': config.dbPassword
+        'user': dbUsername,
+        'pass': dbPassword
       },
       resolveWithFullResponse: true
     });
@@ -101,11 +117,11 @@ router.get('/postsbytag/:tag', function (req, res, next) {
 
 router.get('/posts/:id', function (req, res, next) {
   rp.get({
-    uri: config.couchdbUri + config.blogDbName + '/' + req.params.id,
+    uri: couchdbUri + blogDbName + '/' + req.params.id,
     json: true,
     auth: {
-      'user': config.dbUsername,
-      'pass': config.dbPassword
+      'user': dbUsername,
+      'pass': dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -123,11 +139,11 @@ router.get('/posts/:id', function (req, res, next) {
 
 router.get('/tags', function (req, res, next) {
   rp.get({
-    uri: config.couchdbUri + config.blogDbName + '/_design/blog/_view/tags?group=true',
+    uri: couchdbUri + blogDbName + '/_design/blog/_view/tags?group=true',
     json: true,
     auth: {
-      'user': config.dbUsername,
-      'pass': config.dbPassword
+      'user': dbUsername,
+      'pass': dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -145,11 +161,11 @@ router.get('/tags', function (req, res, next) {
 
 router.get('/favorites', function (req, res, next) {
   rp.get({
-    uri: config.couchdbUri + config.blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
+    uri: couchdbUri + blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
     json: true,
     auth: {
-      'user': config.dbUsername,
-      'pass': config.dbPassword
+      'user': dbUsername,
+      'pass': dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {

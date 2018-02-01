@@ -16,6 +16,7 @@ export class InfiniteLoaderComponent implements OnInit, OnChanges {
   @Input() loadedPages: number;
   @Input() totalPages: number;
   @Input() loading: boolean;
+  @Input() noPosts: boolean;
   @Output() trigger: EventEmitter<number> = new EventEmitter();
 
   private scrollStream;
