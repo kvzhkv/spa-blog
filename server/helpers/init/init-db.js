@@ -42,9 +42,7 @@ const createDb = function () {
       },
       body: {
         admins: {
-          names: [
-            dbUsername
-          ],
+          names: [],
           roles: []
         },
         members: {

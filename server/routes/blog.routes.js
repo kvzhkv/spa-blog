@@ -137,43 +137,43 @@ router.get('/posts/:id', function (req, res, next) {
   })
 });
 
-router.get('/tags', function (req, res, next) {
-  rp.get({
-    uri: couchdbUrl + blogDbName + '/_design/blog/_view/tags?group=true',
-    json: true,
-    auth: {
-      'user': dbUsername,
-      'pass': dbPassword
-    },
-    resolveWithFullResponse: true
-  }).then((response) => {
-    let tags = response.body.rows;
-    tags = tags.map(function (item) {
-      return item.key;
-    });
-    res.send({
-      tags
-    });
-  }).catch((error) => {
-    res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
-  });
-});
+// router.get('/tags', function (req, res, next) {
+//   rp.get({
+//     uri: couchdbUrl + blogDbName + '/_design/blog/_view/tags?group=true',
+//     json: true,
+//     auth: {
+//       'user': dbUsername,
+//       'pass': dbPassword
+//     },
+//     resolveWithFullResponse: true
+//   }).then((response) => {
+//     let tags = response.body.rows;
+//     tags = tags.map(function (item) {
+//       return item.key;
+//     });
+//     res.send({
+//       tags
+//     });
+//   }).catch((error) => {
+//     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
+//   });
+// });
 
-router.get('/favorites', function (req, res, next) {
-  rp.get({
-    uri: couchdbUrl + blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
-    json: true,
-    auth: {
-      'user': dbUsername,
-      'pass': dbPassword
-    },
-    resolveWithFullResponse: true
-  }).then((response) => {
-    // let tags = response.body.rows;
-    res.send(response.body.rows);
-  }).catch((error) => {
-    res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
-  });
-})
+// router.get('/favorites', function (req, res, next) {
+//   rp.get({
+//     uri: couchdbUrl + blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
+//     json: true,
+//     auth: {
+//       'user': dbUsername,
+//       'pass': dbPassword
+//     },
+//     resolveWithFullResponse: true
+//   }).then((response) => {
+//     // let tags = response.body.rows;
+//     res.send(response.body.rows);
+//   }).catch((error) => {
+//     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
+//   });
+// })
 
 module.exports = router;
