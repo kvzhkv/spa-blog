@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { NavbarService } from './navbar.service';
 
+class Info {
+  facebookLink?: string;
+  instagramLink?: string;
+  vkLink?: string;
+  youtubeLink?: string;
+}
+
 @Component({
   selector: 'blog-navbar',
   templateUrl: 'navbar.component.html',
@@ -10,7 +17,7 @@ import { NavbarService } from './navbar.service';
 
 export class NavbarComponent implements OnInit {
   public menuItems: {} = null;
-  public info: {} = null;
+  public info: Info = null;
   // public tags: string[] = null;
 
   // public showTagsList = false;

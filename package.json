@@ -11,10 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "server": "pm2-dev start ecosystem.config.js",
-    "server-prod": "pm2-dev start ecosystem.config.js --env production",
-    "init-db": "node ./server/init/init-db.js",
-    "re-init-db": "node ./server/init/reinit-db.js",
-    "init-minio": "node ./server/init/init-minio.js"
+    "server-prod": "pm2-dev start ecosystem.config.js --env production"
   },
   "private": true,
   "dependencies": {

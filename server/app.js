@@ -10,8 +10,11 @@ var proxy = require('http-proxy-middleware');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 
-var appRoutes = require('./routes/app.routes');
-var blogRoutes = require('./routes/blog.routes');
+const initMinio = require('./helpers/init/init-minio');
+const initDb = require('./helpers/init/init-db');
+
+const appRoutes = require('./routes/app.routes');
+const blogRoutes = require('./routes/blog.routes');
 // var adminRoutes = require('./routes/admin.routes');
 const adminAuthRoutes = require('./routes/admin/auth.routes');
 const adminPostsRoutes = require('./routes/admin/posts-manager.routes');
@@ -25,6 +28,13 @@ var app = express();
 // app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
+
+if (process.env.ENABLE_INIT_SCRIPTS) {
+  // enable init-db init-minio
+  initMinio.createMinioBucket();
+  initDb.createDb();
+}
+
 if (process.env.NODE_ENV === 'production') {
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 }
@@ -65,7 +75,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/media', proxy({
-  target: process.env.MINIO_URL
+  target: `http${process.env.MINIO_SECURE === 'true' ? 's' : ''}://${process.env.MINIO_END_POINT}:${process.env.MINIO_PORT}`
 }));
 
 // app.use('/media', express.static(path.join(__dirname, 'storage', 'media')));

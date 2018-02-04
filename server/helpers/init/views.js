@@ -3,7 +3,7 @@ module.exports = [{
     language: "javascript",
     views: {
       posts: {
-        map: function(doc) {
+        map: function (doc) {
           if (doc.type === "post") {
             if (doc.post.cut) {
               emit(doc.post.date, {
@@ -84,18 +84,32 @@ module.exports = [{
           }
         }
       },
-      tags: {
-        map: function (doc) {
-          if (doc.type === "post" && doc.published) {
-            doc.post.tags.forEach(function (tag) {
-              emit(tag, 1);
-            });
-          }
-        },
-        reduce: function (key, values, rereduce) {
-          return sum(values);
-        }
-      },
+      // tags: {
+      //   map: function (doc) {
+      //     if (doc.type === "post" && doc.published) {
+      //       doc.post.tags.forEach(function (tag) {
+      //         emit(tag, 1);
+      //       });
+      //     }
+      //   },
+      //   reduce: function (key, values, rereduce) {
+      //     return sum(values);
+      //   }
+      // },
+      // favorites: {
+      //   map: function (doc) {
+      //     if (doc.type === "post" && doc.published) {
+      //       doc.post.tags.forEach(function (tag) {
+      //         if (tag === "★") {
+      //           emit(doc.post.date, {
+      //             title: doc.post.title,
+      //             imageUrl: doc.post.imageUrl
+      //           });
+      //         }
+      //       });
+      //     }
+      //   }
+      // },
       postsbytags: {
         map: function (doc) {
           if (doc.type === "post" && doc.published) {
@@ -127,41 +141,15 @@ module.exports = [{
             });
           }
         }
-      },
-      favorites: {
-        map: function (doc) {
-          if (doc.type === "post" && doc.published) {
-            doc.post.tags.forEach(function (tag) {
-              if (tag === "★") {
-                emit(doc.post.date, {
-                  title: doc.post.title,
-                  imageUrl: doc.post.imageUrl
-                });
-              }
-            });
-          }
-        }
       }
     }
   },
   {
     _id: "menu",
     menuItems: [{
-        tag: "вдохновение",
-        subtags: []
-      },
-      {
-        tag: "обзоры",
-        subtags: [
-          "книги",
-          "фильмы"
-        ]
-      },
-      {
-        tag: "обо мне",
-        subtags: []
-      }
-    ],
+      tag: "tag",
+      subtags: []
+    }],
     type: "menu"
   }
 ]

@@ -11,7 +11,7 @@ const {
 } = require('../../helpers/auth');
 
 // const config = require('../../config/json');
-const couchdbUri = process.env.COUCH_DB_URL;
+const couchdbUrl = process.env.COUCH_DB_URL;
 const blogDbName = process.env.BLOG_DB_NAME;
 const dbUsername = process.env.DB_USERNAME;
 const dbPassword = process.env.DB_PASSWORD;
@@ -23,7 +23,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   // TODO: validation
 
   rp.get({
-      uri: couchdbUri + blogDbName + `/_design/admin/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+      uri: couchdbUrl + blogDbName + `/_design/admin/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
       json: true,
       auth: {
         'user': dbUsername,
@@ -49,7 +49,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   //TODO: do i need validation here?
   router.get('/posts/:id', authenticateAdmin, function (req, res, next) {
     rp.get({
-      uri: couchdbUri + blogDbName + '/' + req.params.id,
+      uri: couchdbUrl + blogDbName + '/' + req.params.id,
       json: true,
       auth: {
         'user': dbUsername,
@@ -74,7 +74,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
       }
   
       rp.post({
-        uri: couchdbUri + blogDbName,
+        uri: couchdbUrl + blogDbName,
         json: true,
         auth: {
           'user': dbUsername,
@@ -99,7 +99,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
     if (req.body) {
       let updatedPost = req.body;
       rp.get({
-        uri: couchdbUri + blogDbName + '/' + req.params.id,
+        uri: couchdbUrl + blogDbName + '/' + req.params.id,
         json: true,
         auth: {
           'user': dbUsername,
@@ -112,7 +112,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
         post.post = updatedPost;
   
         return rp.put({
-          uri: couchdbUri + blogDbName + '/' + req.params.id,
+          uri: couchdbUrl + blogDbName + '/' + req.params.id,
           json: true,
           auth: {
             'user': dbUsername,
@@ -133,7 +133,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   
   router.delete('/posts/:id', authenticateAdmin, function (req, res, next) {
     rp.get({
-      uri: couchdbUri + blogDbName + '/' + req.params.id,
+      uri: couchdbUrl + blogDbName + '/' + req.params.id,
       json: true,
       auth: {
         'user': dbUsername,
@@ -142,7 +142,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
       resolveWithFullResponse: true
     }).then((response) => {
       return rp.delete({
-        uri: couchdbUri + blogDbName + '/' + req.params.id,
+        uri: couchdbUrl + blogDbName + '/' + req.params.id,
         json: true,
         headers: {
           'If-Match': response.body._rev
@@ -162,7 +162,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   
   router.put('/posts/publicate/:id', authenticateAdmin, function (req, res, next) {
     rp.get({
-      uri: couchdbUri + blogDbName + '/' + req.params.id,
+      uri: couchdbUrl + blogDbName + '/' + req.params.id,
       json: true,
       auth: {
         'user': dbUsername,
@@ -173,7 +173,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
       let postDoc = response.body;
       postDoc.published = !postDoc.published;
       return rp.put({
-        uri: couchdbUri + blogDbName + '/' + req.params.id,
+        uri: couchdbUrl + blogDbName + '/' + req.params.id,
         json: true,
         body: postDoc,
         auth: {

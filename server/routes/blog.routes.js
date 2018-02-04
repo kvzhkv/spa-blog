@@ -5,7 +5,7 @@ const rp = require('request-promise');
 // const QuillDeltaToHtml = require('quill-delta-to-html');
 // const Delta = require('quill-delta');
 
-const couchdbUri = process.env.COUCH_DB_URL;
+const couchdbUrl = process.env.COUCH_DB_URL;
 const blogDbName = process.env.BLOG_DB_NAME;
 const dbUsername = process.env.DB_USERNAME;
 const dbPassword = process.env.DB_PASSWORD;
@@ -21,7 +21,7 @@ const resMessages = require('../helpers/res-messages');
 
 router.get('/info', function (req, res, next) {
   rp.get({
-    uri: couchdbUri + blogDbName + '/menu',
+    uri: couchdbUrl + blogDbName + '/menu',
     json: true,
     auth: {
       'user': dbUsername,
@@ -48,7 +48,7 @@ router.get('/posts', function (req, res, next) {
   // TODO: validation
 
   rp.get({
-    uri: couchdbUri + blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+    uri: couchdbUrl + blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
     json: true,
     auth: {
       'user': dbUsername,
@@ -76,7 +76,7 @@ router.get('/postsbytag/:tag', function (req, res, next) {
   // console.log(tag);
   let encodedTag = encodeURIComponent(tag);
   rp.get({
-    uri: couchdbUri + blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
+    uri: couchdbUrl + blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
     json: true,
     auth: {
       'user': dbUsername,
@@ -88,7 +88,7 @@ router.get('/postsbytag/:tag', function (req, res, next) {
     totalRows = response.body.rows[0] ? response.body.rows[0].value : 0;
     // console.log(totalRows)
     return rp.get({
-      uri: couchdbUri + blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+      uri: couchdbUrl + blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
       json: true,
       auth: {
         'user': dbUsername,
@@ -117,7 +117,7 @@ router.get('/postsbytag/:tag', function (req, res, next) {
 
 router.get('/posts/:id', function (req, res, next) {
   rp.get({
-    uri: couchdbUri + blogDbName + '/' + req.params.id,
+    uri: couchdbUrl + blogDbName + '/' + req.params.id,
     json: true,
     auth: {
       'user': dbUsername,
@@ -139,7 +139,7 @@ router.get('/posts/:id', function (req, res, next) {
 
 router.get('/tags', function (req, res, next) {
   rp.get({
-    uri: couchdbUri + blogDbName + '/_design/blog/_view/tags?group=true',
+    uri: couchdbUrl + blogDbName + '/_design/blog/_view/tags?group=true',
     json: true,
     auth: {
       'user': dbUsername,
@@ -161,7 +161,7 @@ router.get('/tags', function (req, res, next) {
 
 router.get('/favorites', function (req, res, next) {
   rp.get({
-    uri: couchdbUri + blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
+    uri: couchdbUrl + blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
     json: true,
     auth: {
       'user': dbUsername,

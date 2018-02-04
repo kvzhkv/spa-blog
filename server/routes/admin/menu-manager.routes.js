@@ -7,7 +7,7 @@ const {
   authenticateAdmin
 } = require('../../helpers/auth');
 
-const couchdbUri = process.env.COUCH_DB_URL;
+const couchdbUrl = process.env.COUCH_DB_URL;
 const blogDbName = process.env.BLOG_DB_NAME;
 const dbUsername = process.env.DB_USERNAME;
 const dbPassword = process.env.DB_PASSWORD;
@@ -17,7 +17,7 @@ const resMessages = require('../../helpers/res-messages');
 
 router.get('/menu', authenticateAdmin, function (req, res, next) {
   rp.get({
-    uri: couchdbUri + blogDbName + '/menu',
+    uri: couchdbUrl + blogDbName + '/menu',
     json: true,
     auth: {
       'user': dbUsername,
@@ -37,7 +37,7 @@ router.get('/menu', authenticateAdmin, function (req, res, next) {
 router.put('/menu', authenticateAdmin, function (req, res, next) {
   if (req.body.menuItems) {
     rp.get({
-      uri: couchdbUri + blogDbName + '/menu',
+      uri: couchdbUrl + blogDbName + '/menu',
       json: true,
       auth: {
         'user': dbUsername,
@@ -48,7 +48,7 @@ router.put('/menu', authenticateAdmin, function (req, res, next) {
       let menuDoc = response.body;
       menuDoc.menuItems = req.body.menuItems;
       return rp.put({
-        uri: couchdbUri + blogDbName + '/menu',
+        uri: couchdbUrl + blogDbName + '/menu',
         json: true,
         auth: {
           'user': dbUsername,
