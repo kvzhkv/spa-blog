@@ -84,18 +84,18 @@ module.exports = [{
           }
         }
       },
-      // tags: {
-      //   map: function (doc) {
-      //     if (doc.type === "post" && doc.published) {
-      //       doc.post.tags.forEach(function (tag) {
-      //         emit(tag, 1);
-      //       });
-      //     }
-      //   },
-      //   reduce: function (key, values, rereduce) {
-      //     return sum(values);
-      //   }
-      // },
+      tags: {
+        map: function (doc) {
+          if (doc.type === "post" && doc.published) {
+            doc.post.tags.forEach(function (tag) {
+              emit(tag, 1);
+            });
+          }
+        },
+        reduce: function (key, values, rereduce) {
+          return sum(values);
+        }
+      },
       // favorites: {
       //   map: function (doc) {
       //     if (doc.type === "post" && doc.published) {

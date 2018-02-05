@@ -9,9 +9,6 @@
 # dependencies
 /node_modules
 
-# notes
-/.notes
-
 # pm2 ecosystem
 ecosystem.config.js
 
@@ -40,6 +37,7 @@ npm-debug.log
 testem.log
 /typings
 /.temp
+/.notes
 
 # e2e
 /e2e/*.js

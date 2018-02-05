@@ -6,6 +6,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var proxy = require('http-proxy-middleware');
+var helmet = require('helmet');
 
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
@@ -36,6 +37,7 @@ if (process.env.ENABLE_INIT_SCRIPTS) {
 }
 
 if (process.env.NODE_ENV === 'production') {
+  app.use(helmet());
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 }
 
