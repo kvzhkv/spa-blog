@@ -1,11 +1,13 @@
 const Minio = require('minio');
 
+const c = require('../../config');
+
 const minioClient = new Minio.Client({
-  endPoint: process.env.MINIO_END_POINT,
-  port: parseInt(process.env.MINIO_PORT, 10),
-  secure: process.env.MINIO_SECURE === 'true',
-  accessKey: process.env.MINIO_ACCESS_KEY,
-  secretKey: process.env.MINIO_SECRET_KEY
+  endPoint: c.minioEndPoint,
+  port: c.minioPort,
+  secure: c.minioSecure,
+  accessKey: c.minioAccessKey,
+  secretKey: c.minioSecretKey
 });
 
 const createMinioBucket = function () {

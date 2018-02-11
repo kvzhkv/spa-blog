@@ -1,13 +1,11 @@
 const rp = require('request-promise');
 
+const c = require('../../config');
 const viewsObj = require('./views');
 
-const couchdbUrl = process.env.COUCH_DB_URL;
-const blogDbName = process.env.BLOG_DB_NAME;
-const dbUsername = process.env.DB_USERNAME;
-const dbPassword = process.env.DB_PASSWORD;
-const dbAdminUsername = process.env.DB_ADMIN_USERNAME;
-const dbAdminPassword = process.env.DB_ADMIN_PASSWORD;
+const {
+  hashPassword
+} = require('../auth');
 
 const views = viewsObj.map((doc) => {
   for (key in doc.views) {
@@ -24,21 +22,21 @@ const views = viewsObj.map((doc) => {
 const createDb = function () {
   // Creating database
   rp.put({
-    uri: couchdbUrl + blogDbName,
+    uri: c.couchdbUrl + c.blogDbName,
     json: true,
     auth: {
-      'user': dbAdminUsername,
-      'pass': dbAdminPassword
+      'user': c.dbAdminUsername,
+      'pass': c.dbAdminPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
     console.log('Database is created');
     return rp.put({
-      uri: couchdbUrl + blogDbName + '/_security',
+      uri: c.couchdbUrl + c.blogDbName + '/_security',
       json: true,
       auth: {
-        'user': dbAdminUsername,
-        'pass': dbAdminPassword
+        'user': c.dbAdminUsername,
+        'pass': c.dbAdminPassword
       },
       body: {
         admins: {
@@ -47,7 +45,7 @@ const createDb = function () {
         },
         members: {
           names: [
-            dbUsername
+            c.dbUsername
           ],
           roles: []
         }
@@ -57,12 +55,19 @@ const createDb = function () {
   }).then((response) => {
     console.log('Permissions for database are set');
     let docs = views;
+    let adminDoc = {
+      _id: 'admin',
+      type: 'admin',
+      username: c.blogAdminUsername,
+      password: hashPassword(c.blogAdminPassword)
+    }
+    docs.push(adminDoc);
     return rp.post({
-      uri: couchdbUrl + blogDbName + '/_bulk_docs',
+      uri: c.couchdbUrl + c.blogDbName + '/_bulk_docs',
       json: true,
       auth: {
-        'user': dbAdminUsername,
-        'pass': dbAdminPassword
+        'user': c.dbAdminUsername,
+        'pass': c.dbAdminPassword
       },
       body: {
         docs
@@ -74,7 +79,7 @@ const createDb = function () {
     console.log('Done!')
   }).catch((error) => {
     if (error.error.reason === 'The database could not be created, the file already exists.') {
-      console.log(`Database "${blogDbName}" exists.`);
+      console.log(`Database "${c.blogDbName}" exists.`);
     } else {
       console.log('An error occured: ', error);
     }
@@ -82,27 +87,27 @@ const createDb = function () {
 
   // Creating database user
   rp.head({
-    uri: couchdbUrl + '_users/org.couchdb.user:' + dbUsername,
+    uri: c.couchdbUrl + '_users/org.couchdb.user:' + c.dbUsername,
     json: true,
     auth: {
-      'user': dbAdminUsername,
-      'pass': dbAdminPassword
+      'user': c.dbAdminUsername,
+      'pass': c.dbAdminPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
-    console.log(`User "${dbUsername}" exists.`);
+    console.log(`User "${c.dbUsername}" exists.`);
   }).catch((error) => {
     if (error.statusCode === 404) {
       rp.put({
-        uri: couchdbUrl + '_users/org.couchdb.user:' + dbUsername,
+        uri: c.couchdbUrl + '_users/org.couchdb.user:' + c.dbUsername,
         json: true,
         auth: {
-          'user': dbAdminUsername,
-          'pass': dbAdminPassword
+          'user': c.dbAdminUsername,
+          'pass': c.dbAdminPassword
         },
         body: {
-          name: dbUsername,
-          password: dbPassword,
+          name: c.dbUsername,
+          password: c.dbPassword,
           roles: [],
           type: 'user'
         },

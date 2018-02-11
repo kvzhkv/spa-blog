@@ -4,39 +4,29 @@ const rp = require('request-promise');
 
 // const QuillDeltaToHtml = require('quill-delta-to-html');
 // const Delta = require('quill-delta');
-
-const couchdbUrl = process.env.COUCH_DB_URL;
-const blogDbName = process.env.BLOG_DB_NAME;
-const dbUsername = process.env.DB_USERNAME;
-const dbPassword = process.env.DB_PASSWORD;
-
-const blogAuthor = process.env.BLOG_AUTHOR;
-const instagramLink = process.env.INSTAGRAM_LINK;
-const facebookLink = process.env.FACEBOOK_LINK;
-const vkLink = process.env.VK_LINK;
-const youtubeLink = process.env.YOUTUBE_LINK;
+const c = require('../config');
 
 const errorHandler = require('../helpers/error-handler');
 const resMessages = require('../helpers/res-messages');
 
 router.get('/info', function (req, res, next) {
   rp.get({
-    uri: couchdbUrl + blogDbName + '/menu',
+    uri: c.couchdbUrl + c.blogDbName + '/menu',
     json: true,
     auth: {
-      'user': dbUsername,
-      'pass': dbPassword
+      'user': c.dbUsername,
+      'pass': c.dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
     res.status(200).send({
       menuItems: response.body.menuItems,
       info: {
-        blogAuthor,
-        instagramLink,
-        facebookLink,
-        vkLink,
-        youtubeLink
+        blogAuthor: c.blogAuthor,
+        instagramLink: c.instagramLink,
+        facebookLink: c.facebookLink,
+        vkLink: c.vkLink,
+        youtubeLink: c.youtubeLink
       }
     });
   }).catch((error) => {
@@ -48,11 +38,11 @@ router.get('/posts', function (req, res, next) {
   // TODO: validation
 
   rp.get({
-    uri: couchdbUrl + blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+    uri: c.couchdbUrl + c.blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
     json: true,
     auth: {
-      'user': dbUsername,
-      'pass': dbPassword
+      'user': c.dbUsername,
+      'pass': c.dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -76,11 +66,11 @@ router.get('/postsbytag/:tag', function (req, res, next) {
   // console.log(tag);
   let encodedTag = encodeURIComponent(tag);
   rp.get({
-    uri: couchdbUrl + blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
+    uri: c.couchdbUrl + c.blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
     json: true,
     auth: {
-      'user': dbUsername,
-      'pass': dbPassword
+      'user': c.dbUsername,
+      'pass': c.dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -88,11 +78,11 @@ router.get('/postsbytag/:tag', function (req, res, next) {
     totalRows = response.body.rows[0] ? response.body.rows[0].value : 0;
     // console.log(totalRows)
     return rp.get({
-      uri: couchdbUrl + blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+      uri: c.couchdbUrl + c.blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
       json: true,
       auth: {
-        'user': dbUsername,
-        'pass': dbPassword
+        'user': c.dbUsername,
+        'pass': c.dbPassword
       },
       resolveWithFullResponse: true
     });
@@ -117,11 +107,11 @@ router.get('/postsbytag/:tag', function (req, res, next) {
 
 router.get('/posts/:id', function (req, res, next) {
   rp.get({
-    uri: couchdbUrl + blogDbName + '/' + req.params.id,
+    uri: c.couchdbUrl + c.blogDbName + '/' + req.params.id,
     json: true,
     auth: {
-      'user': dbUsername,
-      'pass': dbPassword
+      'user': c.dbUsername,
+      'pass': c.dbPassword
     },
     resolveWithFullResponse: true
   }).then((response) => {
@@ -139,11 +129,11 @@ router.get('/posts/:id', function (req, res, next) {
 
 // router.get('/tags', function (req, res, next) {
 //   rp.get({
-//     uri: couchdbUrl + blogDbName + '/_design/blog/_view/tags?group=true',
+//     uri: c.couchdbUrl + c.blogDbName + '/_design/blog/_view/tags?group=true',
 //     json: true,
 //     auth: {
-//       'user': dbUsername,
-//       'pass': dbPassword
+//       'user': c.dbUsername,
+//       'pass': c.dbPassword
 //     },
 //     resolveWithFullResponse: true
 //   }).then((response) => {
@@ -161,11 +151,11 @@ router.get('/posts/:id', function (req, res, next) {
 
 // router.get('/favorites', function (req, res, next) {
 //   rp.get({
-//     uri: couchdbUrl + blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
+//     uri: c.couchdbUrl + c.blogDbName + '/_design/blog/_view/favorites?descending=true&limit=4',
 //     json: true,
 //     auth: {
-//       'user': dbUsername,
-//       'pass': dbPassword
+//       'user': c.dbUsername,
+//       'pass': c.dbPassword
 //     },
 //     resolveWithFullResponse: true
 //   }).then((response) => {

@@ -21,6 +21,7 @@ const adminAuthRoutes = require('./routes/admin/auth.routes');
 const adminPostsRoutes = require('./routes/admin/posts-manager.routes');
 const adminMenuRoutes = require('./routes/admin/menu-manager.routes');
 const adminMediaRoutes = require('./routes/admin/media-manager.routes');
+const c = require('./config');
 
 var app = express();
 
@@ -30,13 +31,13 @@ var app = express();
 
 // uncomment after placing your favicon in /public
 
-if (process.env.ENABLE_INIT_SCRIPTS) {
+if (c.enableInitScripts) {
   // enable init-db init-minio
   initMinio.createMinioBucket();
   initDb.createDb();
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (c.nodeEnv === 'production') {
   app.use(helmet());
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 }
@@ -49,7 +50,7 @@ app.use(bodyParser.urlencoded({
 }));
 // app.use(cookieParser());
 
-if (process.env.NODE_ENV === 'development') {
+if (c.nodeEnv === 'development') {
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -77,12 +78,12 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/media', proxy({
-  target: `http${process.env.MINIO_SECURE === 'true' ? 's' : ''}://${process.env.MINIO_END_POINT}:${process.env.MINIO_PORT}`
+  target: `http${c.minioSecure ? 's' : ''}://${c.minioEndPoint}:${c.minioPort}`
 }));
 
 // app.use('/media', express.static(path.join(__dirname, 'storage', 'media')));
 
-if (process.env.NODE_ENV === 'development') {
+if (c.nodeEnv === 'development') {
   app.use(function (req, res, next) {
     setTimeout(() => {
       next();
