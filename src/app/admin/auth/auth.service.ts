@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    username = username.toLowerCase();
+    // username = username.toLowerCase();
     return this.http
       .post('api/admin/login', { username, password })
       .map(res => {

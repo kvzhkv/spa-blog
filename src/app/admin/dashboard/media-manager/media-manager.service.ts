@@ -7,19 +7,20 @@ export class MediaManagerService {
 
   constructor(public http: HttpClient) { }
 
-  getTree(): Observable<any> {
-    return this.http.get('api/admin/tree').map(res => {
+  getList(): Observable<any> {
+    return this.http.get('api/admin/list').map(res => {
       return res;
     }).catch(err => {
       return err;
     });
   }
 
-  uploadFile(file: FormData, path: string): Observable<any> {
-    return this.http.post(`api/admin/file?path=${path}`, file).map(res => {
+  uploadFile(file: FormData): Observable<any> {
+    return this.http.put('api/admin/file', file).map(res => {
+      console.log(res);
       return res;
     }).catch(err => {
-      console.log(err);
+      // console.log(err);
       return err;
     });
   }

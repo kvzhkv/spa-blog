@@ -38,14 +38,15 @@ h1 {
   font-family: $headers-font;  
   text-transform: capitalize;
   margin: 0 0 5px 0;
-  // text-align: center;
-  color: #505050;  
+  padding: 10px 0 0 0;
+  text-align: center;
+  color: $headers-color;  
 }
 
 h2 {
   font-family: $headers-font;
   // text-align: center;
-  color: #505050;
+  color: $headers-color;
   line-height: 110%;
   font-size: 1.7rem;
   text-transform: capitalize;
@@ -55,7 +56,12 @@ h2 {
 }
 
 h3 {
-  margin: 0;
+  color: $headers-color;
+  font-family: $headers-font;  
+  line-height: 110%;
+  font-size: 1.7rem;
+  text-transform: capitalize;
   font-weight: 700;
-  font-size: 1.4rem;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }

@@ -24,7 +24,7 @@ export class FileAccessor implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (_: any) => void): void {
-    console.log('reg')
+    // console.log('reg')
     this.onChange = fn;
   }
 

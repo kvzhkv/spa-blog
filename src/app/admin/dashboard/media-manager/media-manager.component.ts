@@ -9,7 +9,7 @@ import { MediaManagerService } from './media-manager.service';
 })
 
 export class MediaManagerComponent implements OnInit {
-  @Input() editPostMode: boolean = false;
+  @Input() editPostMode = false;
   @Output() selectFile: EventEmitter<string> = new EventEmitter<string>();
 
   public filesList: {}[] = [];
@@ -20,35 +20,35 @@ export class MediaManagerComponent implements OnInit {
 
   ngOnInit() {
     this.uploadFileForm = this.fb.group({
-      file: [{ value: '', disabled: false }, [Validators.required]],
-      path: [{ value: '', disabled: false }, [Validators.required]]
+      file: [{ value: '', disabled: false }, [Validators.required]]
+      // path: [{ value: '', disabled: false }, [Validators.required]]
     });
 
-    this.getTree();
+    this.getList();
   }
 
   selectItem(item: any) {
     this.selectedItem = item;
-    if(this.selectedItem.type === 'directory') {
-      if (this.selectedItem.path === './media') {
-        this.setFolderPath('/');
-      } else {
-        let path = item.path.substring(6);
-        this.setFolderPath(path);
-      }
-    } else {
-      this.setFolderPath('');
+    // if (this.selectedItem.type === 'directory') {
+    //   if (this.selectedItem.path === './media') {
+    //     this.setFolderPath('/');
+    //   } else {
+    //     let path = item.path.substring(6);
+    //     this.setFolderPath(path);
+    //   }
+    // } else {
+    //   this.setFolderPath('');
       if (this.editPostMode) {
-        this.selectFile.emit(item.path);
+        this.selectFile.emit(`media/${item.name}`);
       }
-    }
+    // }
   }
 
-  setFolderPath(path: string) {
-    this.uploadFileForm.patchValue({
-      path: path
-    });
-  }
+  // setFolderPath(path: string) {
+  //   this.uploadFileForm.patchValue({
+  //     path: path
+  //   });
+  // }
 
   uploadFile() {
     // console.log('uploading file', this.uploadFileForm.value.file);
@@ -56,20 +56,17 @@ export class MediaManagerComponent implements OnInit {
 
     // let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#imageUpload');
 
-    let formData = new FormData();
-    formData.append('image', this.uploadFileForm.value.file);
-    console.log(formData.get('image'));
-    this.mediaManagerService.uploadFile(formData, this.uploadFileForm.controls.path.value).subscribe(res => {
-      console.log(res);
-      this.getTree();
-    }, err => {
-      console.log(err);
-    })
+    const formData = new FormData();
+    formData.append('file', this.uploadFileForm.value.file);
+    // console.log(formData.get('image'));
+    this.mediaManagerService.uploadFile(formData).subscribe(res => {
+      this.getList();
+    });
   }
 
-  getTree() {
-    this.mediaManagerService.getTree().subscribe(res => {
-      this.filesList = [res];
-    })
+  getList() {
+    this.mediaManagerService.getList().subscribe(res => {
+      this.filesList = res;
+    });
   }
 }

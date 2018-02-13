@@ -29,9 +29,10 @@ router.post('/login', function (req, res, next) {
         req.session.username = response.body.username;
         res.status(200).send(resMessages.success.loggedInAdmin);
       } else {
-        res.status(401).sendFile(resMessages.error.wrongAdminCredentials);
+        res.status(401).send(resMessages.error.wrongAdminCredentials);
       }
     }).catch((error) => {
+      // console.log(error);
       res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
     });
   } else {
