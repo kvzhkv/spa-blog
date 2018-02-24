@@ -17,11 +17,11 @@ const hashPassword = function (password) {
       iterations: iterationsPbkdf2,
       passwordHashSchema: passwordHashSchema,
       salt: salt
-    }
+    };
   } else {
     return null;
   }
-}
+};
 
 const verifyPassword = function (password, hash) { // TODO: learn more about HASHING algorithm
   if (hash.passwordHashSchema === 'pbkdf2') {
@@ -35,7 +35,7 @@ const verifyPassword = function (password, hash) { // TODO: learn more about HAS
   } else {
     return false; 
   }
-}
+};
 
 const authenticateAdmin = function (req, res, next) {
   if (req.session.userType === 'admin' && req.session.username) {
@@ -43,10 +43,10 @@ const authenticateAdmin = function (req, res, next) {
   } else {
     res.status(401).send(resMessages.error.unauthorizedAdmin);
   }
-}
+};
 
 module.exports = {
   authenticateAdmin,
   hashPassword,
   verifyPassword
-}
+};

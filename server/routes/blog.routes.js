@@ -7,9 +7,9 @@ const rp = require('request-promise');
 const c = require('../config');
 
 const errorHandler = require('../helpers/error-handler');
-const resMessages = require('../helpers/res-messages');
+// const resMessages = require('../helpers/res-messages');
 
-router.get('/info', function (req, res, next) {
+router.get('/info', function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/menu',
     json: true,
@@ -34,7 +34,7 @@ router.get('/info', function (req, res, next) {
   });
 });
 
-router.get('/posts', function (req, res, next) {
+router.get('/posts', function (req, res) {
   // TODO: validation
 
   rp.get({
@@ -60,7 +60,7 @@ router.get('/posts', function (req, res, next) {
 });
 
 // FIXME: validation
-router.get('/postsbytag/:tag', function (req, res, next) {
+router.get('/postsbytag/:tag', function (req, res) {
   let totalRows = null;
   let tag = decodeURIComponent(req.params.tag);
   // console.log(tag);
@@ -74,7 +74,7 @@ router.get('/postsbytag/:tag', function (req, res, next) {
     },
     resolveWithFullResponse: true
   }).then((response) => {
-    console.log(response.body);
+    // console.log(response.body);
     totalRows = response.body.rows[0] ? response.body.rows[0].value : 0;
     // console.log(totalRows)
     return rp.get({
@@ -102,10 +102,10 @@ router.get('/postsbytag/:tag', function (req, res, next) {
   }).catch((error) => {
     // res.send(error);
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
-  })
+  });
 });
 
-router.get('/posts/:id', function (req, res, next) {
+router.get('/posts/:id', function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/' + req.params.id,
     json: true,
@@ -115,16 +115,16 @@ router.get('/posts/:id', function (req, res, next) {
     },
     resolveWithFullResponse: true
   }).then((response) => {
-    let post = response.body.post
+    let post = response.body.post;
     // let converter = new QuillDeltaToHtml(response.body.post.text.ops, {});
     // post.text = converter.convert();
     res.send({
       id: response.body._id,
       post: post
-    })
+    });
   }).catch((error) => {
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
-  })
+  });
 });
 
 // router.get('/tags', function (req, res, next) {

@@ -1,72 +1,66 @@
-import { Component, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import { MediaManagerService } from './media-manager.service';
 
 @Component({
   selector: 'blog-media-manager',
-  templateUrl: 'media-manager.component.html'
+  templateUrl: 'media-manager.component.html',
+  styleUrls: ['media-manager.component.scss']
 })
 
 export class MediaManagerComponent implements OnInit {
   @Input() editPostMode = false;
-  @Output() selectFile: EventEmitter<string> = new EventEmitter<string>();
+  @Output() selectedFile: EventEmitter<string> = new EventEmitter<string>();
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   public filesList: {}[] = [];
-  public selectedItem: any = {};
   public uploadFileForm: FormGroup;
 
-  constructor(public mediaManagerService: MediaManagerService, public fb: FormBuilder, private el: ElementRef) { }
+  constructor(public mediaManagerService: MediaManagerService, public fb: FormBuilder) { }
 
   ngOnInit() {
     this.uploadFileForm = this.fb.group({
       file: [{ value: '', disabled: false }, [Validators.required]]
-      // path: [{ value: '', disabled: false }, [Validators.required]]
     });
-
     this.getList();
   }
 
-  selectItem(item: any) {
-    this.selectedItem = item;
-    // if (this.selectedItem.type === 'directory') {
-    //   if (this.selectedItem.path === './media') {
-    //     this.setFolderPath('/');
-    //   } else {
-    //     let path = item.path.substring(6);
-    //     this.setFolderPath(path);
-    //   }
-    // } else {
-    //   this.setFolderPath('');
-      if (this.editPostMode) {
-        this.selectFile.emit(`media/${item.name}`);
-      }
-    // }
+  chooseFile() {
+    // console.log('asdasd');
+    this.fileInput.nativeElement.click();
   }
 
-  // setFolderPath(path: string) {
-  //   this.uploadFileForm.patchValue({
-  //     path: path
-  //   });
-  // }
-
-  uploadFile() {
-    // console.log('uploading file', this.uploadFileForm.value.file);
-    // console.log('uploading file', this.uploadFileForm.controls.file.value);
-
-    // let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#imageUpload');
-
-    const formData = new FormData();
-    formData.append('file', this.uploadFileForm.value.file);
-    // console.log(formData.get('image'));
-    this.mediaManagerService.uploadFile(formData).subscribe(res => {
-      this.getList();
-    });
+  selectFile(fileName: string) {
+    if (this.editPostMode) {
+      this.selectedFile.emit(`media/${fileName}`);
+    }
   }
 
   getList() {
     this.mediaManagerService.getList().subscribe(res => {
-      this.filesList = res;
+      if (res) {
+        this.filesList = res;
+      }
+    });
+  }
+
+  uploadFile() {
+    const formData = new FormData();
+    formData.append('file', this.uploadFileForm.value.file);
+    this.mediaManagerService.uploadFile(formData).subscribe(res => {
+      this.uploadFileForm.reset();
+      if (res) {
+        this.getList();
+      }
+    });
+  }
+
+  deleteFile(fileName: string) {
+    this.mediaManagerService.deleteFile(fileName).subscribe(res => {
+      if (res) {
+        this.getList();
+      }
     });
   }
 }

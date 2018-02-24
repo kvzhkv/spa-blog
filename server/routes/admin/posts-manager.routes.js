@@ -4,7 +4,7 @@ const router = express.Router();
 const rp = require('request-promise');
 
 // const QuillDeltaToHtml = require('quill-delta-to-html');
-const Delta = require('quill-delta');
+// const Delta = require('quill-delta');
 
 const {
   authenticateAdmin

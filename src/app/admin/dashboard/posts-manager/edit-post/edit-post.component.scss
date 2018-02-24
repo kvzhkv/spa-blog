@@ -87,6 +87,8 @@
   .b-empty-image {
     height: 525px;
     width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
     background-color: $image-manager-background;
   }
   .b-shown-image {

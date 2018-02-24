@@ -1,10 +1,13 @@
-<div class="b-messages">
-  <div *ngFor='let message of messagesStream; index as i' class="b-message" [@flyInOut]="'in'">
-    <span [ngClass]="{'b-success-message': !message.isError ,'b-error-message': message.isError}">
-      <i class="fa" [ngClass]="{'fa-check': !message.isError ,'fa-times': message.isError}"></i>{{message.message}}
-    </span>
-    <a (click)=cleanUpMessage(i)>
-      <i class="fa fa-times"></i>
-    </a>
+<!-- <div class="b-messages"> -->
+  <div *ngFor='let message of messagesStream; index as i' class="b-message" [@flyInOut]="'in'" [ngClass]="{'b-success-message': !message.isError ,'b-error-message': message.isError}">
+    <div class='b-message-status'>
+      <i class="fas fa-2x" [ngClass]="{'fa-check-circle': !message.isError ,'fa-exclamation-circle': message.isError}"></i>
+    </div>
+        {{message.message}}
+    <div class='b-message-close-button'>
+      <button type="button" class='b-btn-message' (click)=cleanUpMessage(i)>
+        <i class="far fa-times-circle fa-lg"></i>
+      </button>
+    </div>
   </div>
-</div>
+<!-- </div> -->

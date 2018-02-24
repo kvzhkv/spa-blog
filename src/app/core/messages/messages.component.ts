@@ -17,7 +17,7 @@ import { Message } from './message.model';
         animate(150)
       ]),
       transition('* => void', [
-        animate(150, style({height: 0, color: 'white'}))
+        animate(150, style({transform: 'translateY(-100%)'}))
       ])
     ])
   ]
@@ -32,9 +32,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.messagesService.messagesState.subscribe((message: Message) => {
+      if (this.messagesStream.length > 0) {
+        this.cleanUpMessage(0);
+      }
       message.timeOut = setTimeout(() => {
         this.messagesStream.splice(0, 1);
-      }, 3000);
+      }, 4000);
       this.messagesStream.push(message);
     });
   }

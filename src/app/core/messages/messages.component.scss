@@ -1,27 +1,62 @@
 @import '~app/variables';
-
-.b-messages {
+.b-message {
   position: fixed;
-  z-index: 300;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 2000;
   width: 100%;
-  top: $navbar-height + 1px;
-  
-  // right: 40px;
-  .b-message {
-    position: relative;
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    // opacity: 0.8;
-    border-bottom: 1px solid $lines-color;
-    // margin-top: 10px;
-    padding: 6px;
-    .b-error-message {
-      color: red;
-    }
-    .b-success-message {
-      color: green;
-    }
+  max-width: 400px; // height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white; // opacity: 0.8;
+  border: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 10px 40px;
+  line-height: 20px;
+  text-align: center;
+  width: calc(100%-200px);
+  .b-message-status {
+    position: absolute;
+    left: 5px;
+    top: 6px; // width: 50px;
+    // height: 100%;
+    // text-align: center;
+    // line-height: 50px;
   }
+  .b-message-close-button {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+  }
+}
+
+.b-error-message {
+  background-color: $error-message;
+  color: #fff;
+}
+
+.b-success-message {
+  background-color: $success-message;
+  color: #fff;
+}
+
+.b-btn-message {
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  font-size: inherit;
+  outline: none;  
+  cursor: pointer;
+  transition: background-color 0.35s, color 0.15s;  
+  // width: 28px;
+  // height: 28px;
+}
+
+.b-btn-message:hover {
+  color: $lines-color;
 }

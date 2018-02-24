@@ -1,10 +1,10 @@
 module.exports = [{
-    _id: "_design/admin",
-    language: "javascript",
+    _id: '_design/admin',
+    language: 'javascript',
     views: {
       posts: {
         map: function (doc) {
-          if (doc.type === "post") {
+          if (doc.type === 'post') {
             if (doc.post.cut) {
               emit(doc.post.date, {
                 type: doc.type,
@@ -47,12 +47,12 @@ module.exports = [{
     }
   },
   {
-    _id: "_design/blog",
-    language: "javascript",
+    _id: '_design/blog',
+    language: 'javascript',
     views: {
       posts: {
         map: function (doc) {
-          if (doc.type === "post" && doc.published) {
+          if (doc.type === 'post' && doc.published) {
             if (doc.post.cut) {
               emit(doc.post.date, {
                 title: doc.post.title,
@@ -86,7 +86,7 @@ module.exports = [{
       },
       tags: {
         map: function (doc) {
-          if (doc.type === "post" && doc.published) {
+          if (doc.type === 'post' && doc.published) {
             doc.post.tags.forEach(function (tag) {
               emit(tag, 1);
             });
@@ -112,7 +112,7 @@ module.exports = [{
       // },
       postsbytags: {
         map: function (doc) {
-          if (doc.type === "post" && doc.published) {
+          if (doc.type === 'post' && doc.published) {
             doc.post.tags.forEach(function (tag) {
               if (doc.post.cut) {
                 emit([tag, doc.post.date], {
@@ -145,11 +145,11 @@ module.exports = [{
     }
   },
   {
-    _id: "menu",
+    _id: 'menu',
     menuItems: [{
-      tag: "tag",
+      tag: 'tag',
       subtags: []
     }],
-    type: "menu"
+    type: 'menu'
   }
 ]

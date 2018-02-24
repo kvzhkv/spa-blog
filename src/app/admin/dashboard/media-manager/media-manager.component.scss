@@ -1,0 +1,55 @@
+@import '~app/variables';
+.b-tiles-container {
+  display: flex;
+  flex-wrap: wrap;
+  .b-file-tile {
+    width: calc(20% - 20px);
+    margin: 10px;
+  }
+}
+
+.b-add-button-container {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  input[type=file] {
+    position: absolute;
+    top:0;
+    left:0;
+    // width:100%;
+    // height: 100%;
+    visibility: hidden;
+  }
+}
+
+.b-tile-image {
+  width: 100%;
+  padding-top: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid $lines-color;
+  position: relative;
+  border-radius: 10px;
+  .b-upload-form {
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.b-tile-text {
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.b-image-buttons-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  text-align: center;
+  opacity: 0.9;
+}

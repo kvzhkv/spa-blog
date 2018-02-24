@@ -18,8 +18,7 @@ import { EditPostComponent } from './dashboard/posts-manager/edit-post/edit-post
 import { MenuManagerService } from './dashboard/menu-manager/menu-manager.service';
 import { MediaManagerService } from './dashboard/media-manager/media-manager.service';
 import { DateValueAccessorDirective } from './dashboard/posts-manager/edit-post/date-value-accessor.directive';
-import { FileAccessor } from './dashboard/media-manager/file-value-accessor.directive';
-import { TreeComponent } from './dashboard/media-manager/tree/tree.component';
+import { FileAccessorDirective } from './dashboard/media-manager/file-value-accessor.directive';
 
 @NgModule({
   imports: [
@@ -33,12 +32,11 @@ import { TreeComponent } from './dashboard/media-manager/tree/tree.component';
     DashboardComponent,
     MenuManagerComponent,
     MediaManagerComponent,
-    TreeComponent,
     PostsManagerComponent,
     PostsComponent,
     EditPostComponent,
     DateValueAccessorDirective,
-    FileAccessor
+    FileAccessorDirective
   ],
   providers: [
     AuthService,

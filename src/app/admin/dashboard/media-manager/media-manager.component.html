@@ -1,18 +1,46 @@
-<h3>
-  Media manager
-</h3>
-<div>
-  <form (ngSubmit)="uploadFile()" [formGroup]="uploadFileForm">
-    <input type="file" id="imageUpload" formControlName="file" placeholder="upload file!!!" getFile>
-    <button [disabled]="!uploadFileForm.valid">Upload</button>
-  </form>
+<div class="b-tiles-container">
+  <div class="b-file-tile b-add-button-container">
+    <div class="b-tile-image">
+      <form class="b-upload-form" (ngSubmit)="uploadFile()" [formGroup]="uploadFileForm">
+        <input #fileInput type="file" id="imageUpload" accept="image/*" formControlName="file" placeholder="upload file!!!" getFile>
+        <button *ngIf="uploadFileForm.valid" [disabled]="!uploadFileForm.valid" class="b-btn b-btn-icon b-btn-success">
+          <i class='fas fa-upload'></i>
+        </button>
+        <button type="button" *ngIf="uploadFileForm.valid" (click)=uploadFileForm.reset() [disabled]="!uploadFileForm.valid" class="b-btn b-btn-icon b-btn-secondary">
+          <i class='fas fa-times'></i>
+        </button>
+        <button type="button" *ngIf="!uploadFileForm.valid" [disabled]="uploadFileForm.valid" class="b-btn b-btn-icon b-btn-success" (click)=chooseFile()>
+          <i class='fa fa-plus'></i>
+        </button>
+      </form>
+    </div>
+    <div class="b-tile-text" *ngIf="uploadFileForm.value.file">
+      {{uploadFileForm.value.file.name}}
+    </div>
+  </div>
+  <div class="b-file-tile" *ngFor="let item of filesList">
+    <div class="b-tile-image" [ngStyle]="{'background-image': 'url(/media/' + item.name +')'}" (mouseenter)="item.showButtons = true"
+      (mouseleave)="item.showButtons = false">
+      <div class="b-image-buttons-container" *ngIf="item.showButtons">
+        <button type="button" *ngIf="editPostMode" [disabled]="!item.showButtons" class="b-btn b-btn-icon b-btn-success" (click)=selectFile(item.name)>
+          <i class='fas fa-check'></i>
+        </button>
+        <button type="button" class="b-btn b-btn-icon b-btn-danger" [disabled]="!item.showButtons" (click)=deleteFile(item.name)>
+          <i class='fas fa-times'></i>
+        </button>
+      </div>
+    </div>
+    <div class="b-tile-text">
+      {{item.name}}
+    </div>
+  </div>
 </div>
-<div>
-  <blog-file-tree [items]="filesList" [selectedItem]="selectedItem" (pickItem)="selectItem($event)"></blog-file-tree>
-</div>
-<div class="b-tech">
+<!-- <div> -->
+<!-- <blog-file-tree [items]="filesList" [selectedItem]="selectedItem" (pickItem)="selectItem($event)"></blog-file-tree> -->
+<!-- </div> -->
+<!-- <div class="b-tech">
   <p>Value: {{ uploadFileForm.value | json }}</p>
   <p>Touched: {{ uploadFileForm.touched }}</p>
   <p>Valid: {{ uploadFileForm.valid }}</p>
   <p>Dirty: {{ uploadFileForm.dirty }}</p>
-</div>
+</div> -->

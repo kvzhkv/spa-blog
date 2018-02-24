@@ -60,7 +60,7 @@ const createDb = function () {
       type: 'admin',
       username: c.blogAdminUsername,
       password: hashPassword(c.blogAdminPassword)
-    }
+    };
     docs.push(adminDoc);
     return rp.post({
       uri: c.couchdbUrl + c.blogDbName + '/_bulk_docs',

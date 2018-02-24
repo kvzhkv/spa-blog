@@ -1,3 +1,5 @@
+@import '~app/variables';
+
 .loading {
   display: none;
   width: 100%;
@@ -10,7 +12,7 @@
 }
 
 .loading-bar-wrap {
-  background: #ccc;
+  background: #fff;
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -20,20 +22,20 @@
 
 .loading-bar1 {
   display: block;
-  left:-300px;
+  left: -300px;
   width:300px;
   position: absolute;
-  background-color: blue;
+  background-color: $active-link-color;
   top: 0;
   opacity: 1;
   z-index: 1001;
 }
 .loading-bar2 {
   display: block;
-  left:-800px;
+  left: -800px;
   width:400px;
   position: absolute;
-  background-color: blue;
+  background-color: $active-link-color;
   top: 0;
   opacity: 1;
   z-index: 1001;
@@ -49,7 +51,7 @@
 
 @keyframes moving1 {
   0% {
-    left: 0%-300px;
+    left: calc(0%-300px);
   }
   100% {
     left: 150%;
@@ -58,7 +60,7 @@
 
 @keyframes moving2 {
   0% {
-    left: -50%-300px;
+    left: calc(-50%-300px);
   }
   100% {
     left: 100%;
