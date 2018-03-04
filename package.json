@@ -12,7 +12,7 @@
     "e2e": "ng e2e",
     "server": "pm2-dev start ecosystem.config.js",
     "server-prod": "pm2-dev start ecosystem.config.js --env production",
-    "deploy": "pm2 deploy production"
+    "deploy": "pm2 deploy ecosystem.config.js production"
   },
   "private": true,
   "dependencies": {
