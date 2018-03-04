@@ -1,4 +1,5 @@
-module.exports = [{
+module.exports = [
+  {
     _id: '_design/admin',
     language: 'javascript',
     views: {
@@ -152,4 +153,4 @@ module.exports = [{
     }],
     type: 'menu'
   }
-]
+];

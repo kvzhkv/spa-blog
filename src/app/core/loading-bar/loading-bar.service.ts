@@ -3,7 +3,6 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class LoadingBarService {
-  // public isLoading: boolean;
   private loaderSubject = new Subject<boolean>();
 
   public loadingState = this.loaderSubject.asObservable();

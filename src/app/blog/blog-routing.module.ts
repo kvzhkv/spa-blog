@@ -21,5 +21,3 @@ const blogRoutes: Routes = [
   exports: [RouterModule],
 })
 export class BlogRoutingModule { }
-
-// export const routedComponents = [AdminComponent];

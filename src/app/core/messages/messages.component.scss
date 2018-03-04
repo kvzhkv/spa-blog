@@ -7,10 +7,10 @@
   margin: 0 auto;
   z-index: 2000;
   width: 100%;
-  max-width: 400px; // height: 40px;
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  background-color: white; // opacity: 0.8;
+  background-color: white;
   border: 0;
   border-radius: 5px;
   overflow: hidden;
@@ -21,10 +21,7 @@
   .b-message-status {
     position: absolute;
     left: 5px;
-    top: 6px; // width: 50px;
-    // height: 100%;
-    // text-align: center;
-    // line-height: 50px;
+    top: 6px;
   }
   .b-message-close-button {
     position: absolute;
@@ -53,8 +50,6 @@
   outline: none;  
   cursor: pointer;
   transition: background-color 0.35s, color 0.15s;  
-  // width: 28px;
-  // height: 28px;
 }
 
 .b-btn-message:hover {

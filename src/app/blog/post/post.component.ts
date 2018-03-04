@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { BlogService } from '../blog.service';
+import { BlogTitleService } from '../../core/blog-title.service';
 
 const Quill = require('quill');
 // import { Quill } from 'quill';
@@ -16,7 +17,10 @@ export class PostComponent implements OnInit, AfterViewInit {
   public post: any = {};
   public renderer: any;
 
-  constructor(public blogService: BlogService, public route: ActivatedRoute, public location: Location) { }
+  constructor(public blogService: BlogService,
+    public route: ActivatedRoute,
+    public location: Location,
+    public blogTitleService: BlogTitleService) { }
 
   ngOnInit() {
     const id = this.route.snapshot.params['postId'];
@@ -35,6 +39,7 @@ export class PostComponent implements OnInit, AfterViewInit {
       if (res) {
         this.post = res.post;
         this.renderer.setContents(this.post.text.ops);
+        this.blogTitleService.pushTitle(this.post.title);
       }
     });
   }

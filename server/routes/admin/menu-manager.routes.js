@@ -10,7 +10,7 @@ const c =require('../../config');
 const errorHandler = require('../../helpers/error-handler');
 const resMessages = require('../../helpers/res-messages');
 
-router.get('/menu', authenticateAdmin, function (req, res, next) {
+router.get('/menu', authenticateAdmin, function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/menu',
     json: true,
@@ -21,15 +21,14 @@ router.get('/menu', authenticateAdmin, function (req, res, next) {
     resolveWithFullResponse: true
   }).then((response) => {
     res.status(200).send({
-      "menuItems": response.body.menuItems
+      'menuItems': response.body.menuItems
     });
   }).catch((error) => {
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
   });
 });
 
-// FIXME: add validation menu
-router.put('/menu', authenticateAdmin, function (req, res, next) {
+router.put('/menu', authenticateAdmin, function (req, res) {
   if (req.body.menuItems) {
     rp.get({
       uri: c.couchdbUrl + c.blogDbName + '/menu',
@@ -51,11 +50,11 @@ router.put('/menu', authenticateAdmin, function (req, res, next) {
         },
         body: menuDoc,
         resolveWithFullResponse: true
-      })
-    }).then((response) => {
+      });
+    }).then(() => {
       res.status(200).send({
-        "ok": true,
-        "message": "menu updated"
+        'ok': true,
+        'message': 'menu updated'
       });
     }).catch((error) => {
       res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));

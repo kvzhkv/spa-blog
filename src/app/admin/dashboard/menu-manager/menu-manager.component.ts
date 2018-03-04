@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import { MenuManagerService } from './menu-manager.service';
+import { NavbarService } from '../../../core/navbar/navbar.service';
+import { BlogTitleService } from '../../../core/blog-title.service';
 
 
 @Component({
@@ -13,9 +15,13 @@ export class MenuManagerComponent implements OnInit {
 
   public editMenuForm: FormGroup;
 
-  constructor(public menuManagerService: MenuManagerService, private fb: FormBuilder) { }
+  constructor(public menuManagerService: MenuManagerService,
+    private fb: FormBuilder,
+    public navbarService: NavbarService,
+    public blogTitleService: BlogTitleService) { }
 
   ngOnInit() {
+    this.blogTitleService.pushTitle('Menu Manager');
     this.editMenuForm = this.fb.group({
       menuItems: this.fb.array([])
     });
@@ -30,7 +36,6 @@ export class MenuManagerComponent implements OnInit {
     });
   }
 
-//FIXME: add validation when setting
   setMenuItems(menuItems: any[]): void {
     const menu = menuItems.map((menuItem: any) => {
       return this.fb.group({
@@ -39,7 +44,6 @@ export class MenuManagerComponent implements OnInit {
       });
     });
     const tagsFormArray = this.fb.array(menu);
-    // console.log(tagsFormArray);
     this.editMenuForm.setControl('menuItems', tagsFormArray);
   }
 
@@ -70,10 +74,9 @@ export class MenuManagerComponent implements OnInit {
   }
 
   saveMenu() {
-    // console.log('saving menu', JSON.stringify(this.editMenuForm.value));
     this.menuManagerService.saveMenu(this.editMenuForm.value).subscribe(res => {
       if (res) {
-        console.log('menu saved');
+        this.navbarService.getInfo();
       }
     });
   }

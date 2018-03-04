@@ -7,7 +7,7 @@ const iterationsPbkdf2 = 100;
 const passwordHashSchema = 'pbkdf2';
 const saltLength = 32;
 const derivedKeyLength = 32;
-const digestSchema = 'sha256'; // FIXME: DO NOT CHANGE IT!????
+const digestSchema = 'sha256';
 
 const hashPassword = function (password) {
   if (passwordHashSchema === 'pbkdf2') {
@@ -23,7 +23,7 @@ const hashPassword = function (password) {
   }
 };
 
-const verifyPassword = function (password, hash) { // TODO: learn more about HASHING algorithm
+const verifyPassword = function (password, hash) {
   if (hash.passwordHashSchema === 'pbkdf2') {
     let hashedPassword = crypto.pbkdf2Sync(password,
       hash.salt, hash.iterations, hash.derivedKey.length / 2, digestSchema).toString('hex');

@@ -2,12 +2,9 @@ const express = require('express');
 const router = express.Router();
 const rp = require('request-promise');
 
-// const QuillDeltaToHtml = require('quill-delta-to-html');
-// const Delta = require('quill-delta');
 const c = require('../config');
 
 const errorHandler = require('../helpers/error-handler');
-// const resMessages = require('../helpers/res-messages');
 
 router.get('/info', function (req, res) {
   rp.get({
@@ -22,7 +19,7 @@ router.get('/info', function (req, res) {
     res.status(200).send({
       menuItems: response.body.menuItems,
       info: {
-        blogAuthor: c.blogAuthor,
+        blogTitle: c.blogTitle,
         instagramLink: c.instagramLink,
         facebookLink: c.facebookLink,
         vkLink: c.vkLink,
@@ -35,8 +32,6 @@ router.get('/info', function (req, res) {
 });
 
 router.get('/posts', function (req, res) {
-  // TODO: validation
-
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + `/_design/blog/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
     json: true,
@@ -46,24 +41,15 @@ router.get('/posts', function (req, res) {
     },
     resolveWithFullResponse: true
   }).then((response) => {
-    // response.body.rows.map((post) => {
-    //   let cuttedPost = new Delta(post.value.text.ops).slice(0, 250);
-    //   // console.log(cuttedPost)
-    //   let converter = new QuillDeltaToHtml(cuttedPost.ops, {});
-    //   post.value.text = converter.convert();
-    //   return post;
-    // });
     res.status(200).send(response.body);
   }).catch((error) => {
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
   });
 });
 
-// FIXME: validation
 router.get('/postsbytag/:tag', function (req, res) {
   let totalRows = null;
   let tag = decodeURIComponent(req.params.tag);
-  // console.log(tag);
   let encodedTag = encodeURIComponent(tag);
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + `/_design/blog/_view/tags?key="${encodedTag}"`,
@@ -74,9 +60,7 @@ router.get('/postsbytag/:tag', function (req, res) {
     },
     resolveWithFullResponse: true
   }).then((response) => {
-    // console.log(response.body);
     totalRows = response.body.rows[0] ? response.body.rows[0].value : 0;
-    // console.log(totalRows)
     return rp.get({
       uri: c.couchdbUrl + c.blogDbName + `/_design/blog/_view/postsbytags?startkey=["${encodedTag}","3"]&endkey=["${encodedTag}"]&descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
       json: true,
@@ -87,20 +71,9 @@ router.get('/postsbytag/:tag', function (req, res) {
       resolveWithFullResponse: true
     });
   }).then((response) => {
-    // console.log(response.body) 
-    // response.body.rows.map((post) => {
-    //   let cuttedPost = new Delta(post.value.text.ops).slice(0, 250);
-    //   // console.log(cuttedPost)
-    //   let converter = new QuillDeltaToHtml(cuttedPost.ops, {});
-    //   post.value.text = converter.convert();
-    //   return post;
-    // });
-
     response.body.total_rows = totalRows;
-
     res.status(200).send(response.body);
   }).catch((error) => {
-    // res.send(error);
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
   });
 });
@@ -116,8 +89,6 @@ router.get('/posts/:id', function (req, res) {
     resolveWithFullResponse: true
   }).then((response) => {
     let post = response.body.post;
-    // let converter = new QuillDeltaToHtml(response.body.post.text.ops, {});
-    // post.text = converter.convert();
     res.send({
       id: response.body._id,
       post: post

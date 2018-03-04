@@ -1,9 +1,7 @@
 @import '~app/variables';
 
 footer {
-  // background-color: $footer-background;
   border-top: 1px solid $lines-color;
-  // background-color: lightgrey;
   font-family: 'PT Sans', serif, Times;
   color: grey;
   width: 100%;
@@ -12,14 +10,11 @@ footer {
     padding: 0 20px;
     display: flex;
     .b-copyright {
-      // position: relative;
       display: inline-block;
       line-height: $footer-height;
     }
     .b-author {
       line-height: $footer-height;
-      // position: relative;
-      
       display: inline-block;
       margin-left: auto;
     }

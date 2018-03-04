@@ -8,50 +8,59 @@ import { MessagesService } from '../core/messages/messages.service';
 @Injectable()
 export class BlogService {
 
-  // public currentPage = 1;
-  // public totalPages = 1;
-  public postsOnPage = 9; // FIXME: move to settings???
-  // public currentTag: string = null;
+  public posts: any[] = []; // FIXME: post.model
+
+  public loadedPostsNumber = 0;
+  public totalPostsNumber = 0;
+
+  public postsOnPage = 9;
+
+  public currentTag: string = null;
+
+  public loading = false;
 
   constructor(public http: HttpClient, public messagesService: MessagesService) { }
 
-  getPosts(page: number, tag?: string): Observable<any> {
-    const skipNumber: number = this.postsOnPage * (page - 1);
-    // if (tag !== this.currentTag) {
-    //   this.currentPage = 1;
-    // }
-    // this.currentTag = tag;
-    // console.log('currentTag:', this.currentTag);
-    if (tag) {
-      const encodedTag = encodeURIComponent(tag);
-      return this.http.get(`api/blog/postsbytag/${encodedTag}?limit=${this.postsOnPage}&skip=${skipNumber}`).map(res => {
-        // this.currentPage = page; // FIXME: другой способ фиксации номера страницы??
-        // this.totalPages = body.total_rows / this.postsOnPage;
-        // this.totalPagesCount(res['total_rows']);
-        return res;
-      }).catch(err => this.errorHandler(err));
+  emptyPosts() {
+    this.posts = [];
+    this.loadedPostsNumber = 0;
+    this.totalPostsNumber = 0;
+  }
+
+  getPosts() {
+    this.loading = true;
+    if (this.currentTag) {
+      const encodedTag = encodeURIComponent(this.currentTag);
+      this.http.get(`api/blog/postsbytag/${encodedTag}?limit=${this.postsOnPage}&skip=${this.loadedPostsNumber}`)
+        .catch(err => this.errorHandler(err))
+        .subscribe(res => {
+          if (res) {
+            this.populatePosts(res['rows'], res['total_rows']);
+          }
+        }, err => { }, () => {
+          this.loading = false;
+        });
     } else {
-      return this.http.get(`api/blog/posts?limit=${this.postsOnPage}&skip=${skipNumber}`).map(res => {
-        // this.currentPage = page; // FIXME: другой способ фиксации номера страницы??
-        // this.totalPages = body.total_rows / this.postsOnPage;
-        // this.totalPagesCount(res['total_rows']);
-        return res;
-      }).catch(err => this.errorHandler(err));
+      this.http.get(`api/blog/posts?limit=${this.postsOnPage}&skip=${this.loadedPostsNumber}`)
+        .catch(err => this.errorHandler(err))
+        .subscribe(res => {
+          if (res) {
+            this.populatePosts(res['rows'], res['total_rows']);
+          }
+        }, err => { }, () => {
+          this.loading = false;
+        });
     }
   }
 
-  // totalPagesCount(totalRows: number): void {
-  //   this.totalPages = Math.ceil(totalRows / this.postsOnPage);
-  // }
+  populatePosts(posts: any[], postsNumber: number) { // FIXME: posts.model
+    this.posts = this.posts.concat(posts);
+    this.totalPostsNumber = postsNumber;
+    this.loadedPostsNumber = this.posts.length;
+  }
 
   getPost(id: string): Observable<any> {
     return this.http.get(`api/blog/posts/${id}`).map(res => {
-      return res;
-    }).catch(err => this.errorHandler(err));
-  }
-
-  getFavorites(): Observable<any> {
-    return this.http.get('api/blog/favorites').map(res => {
       return res;
     }).catch(err => this.errorHandler(err));
   }

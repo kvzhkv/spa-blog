@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, Input, Output, EventEmitter, ViewChild }
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import { MediaManagerService } from './media-manager.service';
+import { BlogTitleService } from '../../../core/blog-title.service';
 
 @Component({
   selector: 'blog-media-manager',
@@ -17,9 +18,14 @@ export class MediaManagerComponent implements OnInit {
   public filesList: {}[] = [];
   public uploadFileForm: FormGroup;
 
-  constructor(public mediaManagerService: MediaManagerService, public fb: FormBuilder) { }
+  constructor(public mediaManagerService: MediaManagerService,
+    public fb: FormBuilder,
+    public blogTitleService: BlogTitleService) { }
 
   ngOnInit() {
+    if (!this.editPostMode) {
+      this.blogTitleService.pushTitle('Media Manager');
+    }
     this.uploadFileForm = this.fb.group({
       file: [{ value: '', disabled: false }, [Validators.required]]
     });
@@ -27,7 +33,6 @@ export class MediaManagerComponent implements OnInit {
   }
 
   chooseFile() {
-    // console.log('asdasd');
     this.fileInput.nativeElement.click();
   }
 

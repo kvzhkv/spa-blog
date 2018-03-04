@@ -4,7 +4,7 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'admin-dashboard',
+  selector: 'blog-admin-dashboard',
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss']
 })

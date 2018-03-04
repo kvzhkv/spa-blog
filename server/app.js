@@ -1,15 +1,13 @@
-var express = require('express');
-var path = require('path');
-// var sfavicon = require('serve-favicon');
-var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
 
-var proxy = require('http-proxy-middleware');
-var helmet = require('helmet');
+const proxy = require('http-proxy-middleware');
+const helmet = require('helmet');
 
-var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 const favicon = require('./helpers/favicon');
 
@@ -24,7 +22,7 @@ const initMinio = require('./helpers/init/init-minio');
 const initDb = require('./helpers/init/init-db');
 const c = require('./config');
 
-var app = express();
+const app = express();
 
 if (c.enableInitScripts) {
   // enable init-db init-minio
@@ -37,14 +35,13 @@ if (c.nodeEnv === 'production') {
   app.use(helmet());
 }
 
-app.use(logger('dev')); // TODO: как это работает и зачем?
+app.use(logger('dev'));
 app.use(favicon());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-// app.use(cookieParser());
 
 if (c.nodeEnv === 'development') {
   app.use(function (req, res, next) {

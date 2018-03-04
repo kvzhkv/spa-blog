@@ -1,2 +1,7 @@
-<admin-dashboard *ngIf="authService.isAdminLoggedIn"></admin-dashboard>
+<div class="b-admin-container">
+  <div class="b-dashboard-container" >
+    <blog-admin-dashboard *ngIf="authService.isAdminLoggedIn"></blog-admin-dashboard>
+  </div>
+
+</div>
 <router-outlet></router-outlet>

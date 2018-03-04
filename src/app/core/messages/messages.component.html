@@ -1,4 +1,3 @@
-<!-- <div class="b-messages"> -->
   <div *ngFor='let message of messagesStream; index as i' class="b-message" [@flyInOut]="'in'" [ngClass]="{'b-success-message': !message.isError ,'b-error-message': message.isError}">
     <div class='b-message-status'>
       <i class="fas fa-2x" [ngClass]="{'fa-check-circle': !message.isError ,'fa-exclamation-circle': message.isError}"></i>
@@ -10,4 +9,3 @@
       </button>
     </div>
   </div>
-<!-- </div> -->

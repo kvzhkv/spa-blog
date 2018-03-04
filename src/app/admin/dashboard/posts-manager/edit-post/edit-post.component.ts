@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 const Quill = require('quill');
 
 import { PostsManagerService } from '../posts-manager.service';
+import { BlogTitleService } from '../../../../core/blog-title.service';
 
 @Component({
   templateUrl: 'edit-post.component.html',
@@ -29,7 +30,8 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(public router: Router,
     public route: ActivatedRoute,
     private fb: FormBuilder,
-    public postsManagerService: PostsManagerService) { }
+    public postsManagerService: PostsManagerService,
+    public blogTitleService: BlogTitleService) { }
 
   ngOnInit() {
     this.tagsFormArray = this.fb.array([[{ value: '', disabled: false }, [Validators.required]]]);
@@ -47,15 +49,13 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.postId !== '0') {
       this.getPost(this.postId);
+    } else {
+      this.blogTitleService.pushTitle('Create Post');
     }
 
   }
 
   ngAfterViewInit() {
-
-    // let Font = Quill.import('attributors/class/font');
-    // Font.whitelist = ['cormorant garamond', 'times', 'roboto'];
-    // Quill.register(Font, true);
 
     this.quill = new Quill('#b-quill-editor', {
       modules: {
@@ -76,7 +76,6 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     this.quill.on('text-change', () => {
       this.editPostForm.patchValue({
         text: this.quill.getContents()
-        // textCut: this.quill.getText(0, 250)
       });
     });
 
@@ -86,6 +85,7 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     this.postsManagerService.getPost(id).subscribe(res => {
       if (res) {
         this.updateForm(res);
+        this.blogTitleService.pushTitle(`Edit post - ${res.title}`);
       }
     });
 
@@ -118,18 +118,11 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/administrator/posts-manager']);
   }
 
-  // get tags(): FormArray {
-  //   return this.editPostForm.get('tags') as FormArray;
-  // }
-
   setTags(tags: string[]): void {
-    this.tagsFormArray.removeAt(0); // FIXME: найти более корректный способ заполнения поля с тэгами
+    this.tagsFormArray.removeAt(0);
     tags.forEach((tag) => {
       this.tagsFormArray.push(this.fb.control({ value: tag, disabled: false }, [Validators.required]));
     });
-    // const tagsFormArray = this.fb.array(tags);
-    // this.editPostForm.setControl('tags', tagsFormArray);
-    // this.tagsFormArray.setValue(tagsFormArray);
   }
 
   addTag(): void {
@@ -138,8 +131,6 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
   removeTag(index: number): void {
     this.tagsFormArray.removeAt(index);
-    // this.tags.removeAt(index);
-    // console.log(this.tags);
   }
 
   getFiles(files: any) {
@@ -157,7 +148,6 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    /* this.editor.remove(); */
     this.quill = undefined;
   }
 }

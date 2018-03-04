@@ -7,17 +7,7 @@ export const DATE_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-/**
- * The accessor for writing a value and listening to changes on a date input element
- *
- *  ### Example
- *  `<input type="date" name="myBirthday" ngModel useValueAsDate>`
- */
 @Directive({
-  // this selector changes the previous behavior silently and might break existing code
-  // selector: 'input[type=date][formControlName],input[type=date][formControl],input[type=date][ngModel]',
-
-  // this selector is an opt-in version
   selector: '[useValueAsDate]',
   providers: [DATE_VALUE_ACCESSOR]
 })
@@ -44,14 +34,14 @@ export class DateValueAccessorDirective implements ControlValueAccessor {
     }
   }
 
-  convertFromTimestamp(value: number): Date { // FIXME: add try catch???
+  convertFromTimestamp(value: number): Date {
     return new Date(value);
   }
 
-  registerOnChange(fn: (_: any) => void): void { // FIXME: not sure of this approach
-    let func = (data: Date) => {
+  registerOnChange(fn: (_: any) => void): void {
+    const func = (data: Date) => {
         fn(this.convertToTimestamp(data));
-    }
+    };
     this.onChange = func;
   }
 

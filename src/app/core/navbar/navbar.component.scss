@@ -5,8 +5,6 @@ nav {
   position: fixed;
   z-index: 1000;
   border-bottom: 1px solid $lines-color;
-  // margin-bottom: 20px;
-  // margin: 0 auto 20px auto;
   top:0;
   width: 100%;
   background-color: white;
@@ -34,14 +32,13 @@ nav {
   height: 100%;
   ul {
     margin: 0;
-    padding: 0; // float: left;
+    padding: 0;
     height: 100%;
     display: inline-block;
     li {
       display: inline-block;
       position: relative;
       height: 100%;
-      // padding: 10px;
       .b-menu-item {
         display: inline-block;
         position: relative;
@@ -57,7 +54,7 @@ nav {
       .b-dropdown-content {
         display: block;
         position: absolute;
-        min-width: inherit; // right: inherit;
+        min-width: inherit;
         background-color: white;
         z-index: 1;
         border: 1px solid $lines-color;
@@ -77,7 +74,7 @@ nav {
 .b-dropdown-tags {
   display: block;
   position: absolute;
-  min-width: inherit; // right: inherit;
+  min-width: inherit;
   background-color: white;
   right: 100%;
   bottom: 0;
@@ -85,9 +82,6 @@ nav {
   border-left: 1px solid $lines-color;
   height: 100%;
   line-height: $navbar-height;
-  // border-top: none;
-  // padding: 6px;
-  // border-radius: 0 0 3px 3px;
   .b-dropdown-tag {
     background-color: lightgrey;
     font-size: 0.8rem;
@@ -100,13 +94,12 @@ nav {
 
 .b-logo-container {
   height: $logo-height;
-  width: $logo-height; // border: 1px solid black;
+  width: $logo-height;
   display: inline-block;
   margin: auto 0;
   img {
     position: relative;
     border-radius: 50%;
-    // border: 1px solid $lines-color;
     height: 100%;
   }
 }
@@ -119,10 +112,6 @@ nav {
     position: relative;
     display: inline-block;
     height: 100%;
-    // margin: auto 0;
-    // width: $social-icon-width;
-    // height: $social-icon-height;
-    // float: left;
     margin: 0 10px 0 0;
   }
 }
@@ -132,12 +121,6 @@ nav {
   vertical-align: middle;
   line-height: $navbar-height;
   font-size: 1.1rem;
-  // display: block;
-  // i {
-  //   display: inline;
-  //   vertical-align: middle;
-  //   line-height: $social-icon-height; // margin: auto;
-  // }
 }
 
 .b-search-container {

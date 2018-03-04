@@ -21,7 +21,7 @@ module.exports = {
   cookieSecret: process.env.COOKIE_SECRET,
   cookieMaxAge: parseInt(process.env.COOKIE_MAX_AGE, 10),
   // Personal info
-  blogAuthor: process.env.BLOG_AUTHOR, //not used yet
+  blogTitle: process.env.BLOG_TITLE,
   instagramLink: process.env.INSTAGRAM_LINK,
   facebookLink: process.env.FACEBOOK_LINK,
   vkLink: process.env.VK_LINK,
@@ -32,4 +32,4 @@ module.exports = {
   blogAdminPassword: process.env.BLOG_ADMIN_PASSWORD,
   dbAdminPassword: process.env.DB_ADMIN_PASSWORD,
   dbAdminUsername: process.env.DB_ADMIN_USERNAME,
-}
+};

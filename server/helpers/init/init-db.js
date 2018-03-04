@@ -8,7 +8,7 @@ const {
 } = require('../auth');
 
 const views = viewsObj.map((doc) => {
-  for (key in doc.views) {
+  for (let key in doc.views) {
     if (typeof doc.views[key].map === 'function') {
       doc.views[key].map = doc.views[key].map.toString();
     }
@@ -29,7 +29,7 @@ const createDb = function () {
       'pass': c.dbAdminPassword
     },
     resolveWithFullResponse: true
-  }).then((response) => {
+  }).then(() => {
     console.log('Database is created');
     return rp.put({
       uri: c.couchdbUrl + c.blogDbName + '/_security',
@@ -52,7 +52,7 @@ const createDb = function () {
       },
       resolveWithFullResponse: true
     });
-  }).then((response) => {
+  }).then(() => {
     console.log('Permissions for database are set');
     let docs = views;
     let adminDoc = {
@@ -94,7 +94,7 @@ const createDb = function () {
       'pass': c.dbAdminPassword
     },
     resolveWithFullResponse: true
-  }).then((response) => {
+  }).then(() => {
     console.log(`User "${c.dbUsername}" exists.`);
   }).catch((error) => {
     if (error.statusCode === 404) {
@@ -112,7 +112,7 @@ const createDb = function () {
           type: 'user'
         },
         resolveWithFullResponse: true
-      }).then((response) => {
+      }).then(() => {
         console.log('User is created');
       }).catch((error) => {
         console.log('An error occured: ', error.message);

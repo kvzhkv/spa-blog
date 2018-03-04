@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
 import { LoginComponent } from './auth/login/login.component';
-// import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginGuard } from './auth/login/login-guard.service';
 import { DashboardGuard } from './dashboard/dashboard-guard.service';
 import { PostsManagerComponent } from './dashboard/posts-manager/posts-manager.component';
@@ -27,9 +26,6 @@ const adminRoutes: Routes = [
           {
             path: '', component: PostsComponent
           },
-          // {
-          //   path: '', redirectTo: 'posts', pathMatch: 'full'
-          // },
           {
             path: 'edit/:postId', component: EditPostComponent
           }
@@ -50,5 +46,3 @@ const adminRoutes: Routes = [
   exports: [RouterModule],
 })
 export class AdminRoutingModule { }
-
-// export const routedComponents = [AdminComponent];

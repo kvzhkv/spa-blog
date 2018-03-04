@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-// import { trigger, state, transition, style, animate } from '@angular/animations';
 
 import { LoadingBarService } from './loading-bar.service';
 
@@ -19,7 +18,7 @@ export class LoadingBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.loadingBarService.loadingState.subscribe((state: boolean) => {
-        if (state){
+        if (state) {
           this.showStream.push(true);
           this.toggleLoadingBar(this.showStream);
         } else {

@@ -13,7 +13,7 @@ const c = require('../../config');
 const errorHandler = require('../../helpers/error-handler');
 const resMessages = require('../../helpers/res-messages');
 
-router.post('/login', function (req, res, next) {
+router.post('/login', function (req, res) {
   if (req.body.username && req.body.password) {
     rp.get({
       uri: c.couchdbUrl + c.blogDbName + '/admin',
@@ -40,11 +40,11 @@ router.post('/login', function (req, res, next) {
   }
 });
 
-router.get('/session', authenticateAdmin, function (req, res, next) {
+router.get('/session', authenticateAdmin, function (req, res) {
   res.status(200).send(resMessages.success.sessionActive);
 });
 
-router.delete('/logout', authenticateAdmin, function (req, res, next) {
+router.delete('/logout', authenticateAdmin, function (req, res) {
   req.session.destroy(function () {
     res.clearCookie('auth');
     res.status(200).send(resMessages.success.loggedOut);

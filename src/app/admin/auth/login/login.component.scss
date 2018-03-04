@@ -1,16 +1,15 @@
 @import '~app/variables';
 .b-login-container {
   width: 100%;
-  height: calc(100vh - 131px);
+  min-height: calc(100vh - 131px);
   display: flex;
-  position: relative; // background-color: yellow;
+  position: relative;
   .b-login {
-    margin: auto; // width: 300px;
+    margin: auto;
     display: flex;
-    // top: 50%;
     .b-login-input {
       display: inline-block;
-      margin-left: 5px; // padding: 5px;
+      margin-left: 5px;
       border: 1px solid $lines-color;
       border-radius: 5px;
       padding-right: 3px;
@@ -37,6 +36,6 @@
   }
 }
 
-.b-has-error {
+// .b-has-error {
   // outline-color: red;
-}
+// }

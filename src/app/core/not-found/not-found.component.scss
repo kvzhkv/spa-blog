@@ -1,0 +1,13 @@
+.b-404-container {
+  width: 100%;
+  min-height: calc(100vh - 131px);
+  display: flex;
+  position: relative;
+  .b-404 {
+    margin: auto;
+    text-align: center;
+    .b-bigger {
+      font-size: 100px;
+    }
+  }
+}

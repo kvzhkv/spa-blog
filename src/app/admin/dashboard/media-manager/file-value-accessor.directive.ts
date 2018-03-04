@@ -24,7 +24,6 @@ export class FileAccessorDirective implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (_: any) => void): void {
-    // console.log('reg')
     this.onChange = fn;
   }
 

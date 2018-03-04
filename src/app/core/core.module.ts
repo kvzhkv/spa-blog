@@ -8,7 +8,7 @@ import localeRu from '@angular/common/locales/ru';
 registerLocaleData(localeRu);
 
 import { LoadingBarComponent } from './loading-bar/loading-bar.component';
-import { NotFoundComponent } from './not-found.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NavbarService } from './navbar/navbar.service';
 
@@ -17,8 +17,7 @@ import { LoadingBarService } from './loading-bar/loading-bar.service';
 import { MessagesComponent } from './messages/messages.component';
 import { MessagesService } from './messages/messages.service';
 import { FooterComponent } from './footer/footer.component';
-
-// import { ErrorService } from './error-handling/error.service';
+import { BlogTitleService } from './blog-title.service';
 
 @NgModule({
   imports: [
@@ -45,6 +44,7 @@ import { FooterComponent } from './footer/footer.component';
     NavbarService,
     LoadingBarService,
     MessagesService,
+    BlogTitleService,
     { provide: LOCALE_ID, useValue: 'ru-RU' },
     {
       provide: HTTP_INTERCEPTORS,

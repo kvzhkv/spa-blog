@@ -21,7 +21,7 @@ function favicon () {
       res.statusCode = req.method === 'OPTIONS' ? 200 : 405;
       res.setHeader('Allow', 'GET, HEAD, OPTIONS');
       res.setHeader('Content-Length', '0');
-      res.end();
+      res.send();
       return;
     }
 
@@ -38,7 +38,8 @@ function favicon () {
       icon = createIcon(response.body, response.headers, EXP_TIME);
       send(req, res, icon);
     }).catch((error) => {
-      next(error);
+      res.statusCode = error.statusCode;
+      res.send(error.error);
     });
   };
 }

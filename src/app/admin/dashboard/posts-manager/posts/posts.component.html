@@ -6,13 +6,13 @@
   </div>
   <div class="b-posts-container">
     <div *ngFor="let column of columns" [ngClass]="'b-col-' + columns.length">
-      <div *ngFor="let post of (posts | columnFilter: column : columns.length)" class='b-post-container'>
+      <div *ngFor="let post of (postsManagerService.posts | columnFilter: column : columns.length)" class='b-post-container'>
         <!-- EDIT PANEL -->
         <div class="b-edit-panel" (mouseenter)="post.showButtons = true" (mouseleave)="post.showButtons = false" [ngClass]="{'b-hidden-post': !post.value.published}">
           <div class="b-edit-buttons" *ngIf="post.showButtons">
-            <!-- <div class="b-read-more-buttons"> -->
-            <button type="button" class="b-btn b-btn-icon" [ngClass]="{'b-btn-secondary': post.value.published,'b-btn-success': !post.value.published}" (click)=publicatePost(post.id)>
-              <span  *ngIf="post.value.published">
+            <button type="button" class="b-btn b-btn-icon" [ngClass]="{'b-btn-secondary': post.value.published,'b-btn-success': !post.value.published}"
+              (click)=publicatePost(post.id)>
+              <span *ngIf="post.value.published">
                 <i class='fa fa-eye-slash'></i>
               </span>
               <span *ngIf="!post.value.published">
@@ -25,35 +25,15 @@
             <button type="button" class="b-btn b-btn-icon b-btn-danger" (click)=deletePost(post.id)>
               <i class='far fa-trash-alt'></i>
             </button>
-            <!-- </div> -->
           </div>
         </div>
         <!-- POST PANEL -->
         <blog-post-brick [post]="post.value.post" [id]="post.id"></blog-post-brick>
-        <!-- <div class="b-top-container">
-          <div class="image-link">
-            <img src={{post.value.post.imageUrl}}>
-          </div>
-        </div>
-        <div class="b-bottom-container">
-          <div class="b-tags-container">
-            <span *ngFor="let tag of post.value.post.tags; last as isLast" class="b-tag">
-              <span class="b-tag-link">{{tag}}</span><span *ngIf="!isLast">,</span>
-            </span>
-          </div>
-          <h2>
-            {{post.value.post.title}}
-          </h2>
-          <div class="b-text-cut">
-            <div>
-              {{post.value.post.cut}}
-            </div>
-          </div>
-          <div class="b-post-date">{{post.value.post.date | date:'mediumDate'}}</div>
-        </div> -->
       </div>
     </div>
   </div>
-  <blog-infinite-loader [loadedPages]="loadedPages" [totalPages]="totalPages" [loading]="loading" (trigger)="getPosts($event)"></blog-infinite-loader>
-  <!-- <blog-pagination [currentPage]="postsManagerService.currentPage" [totalPages]="postsManagerService.totalPages" (page)="changePage($event)"></blog-pagination> -->
+  <blog-infinite-loader [loadedPostsNumber]="postsManagerService.loadedPostsNumber" 
+    [totalPostsNumber]="postsManagerService.totalPostsNumber" 
+    [loading]="postsManagerService.loading"
+    (trigger)="postsManagerService.getPosts($event)"></blog-infinite-loader>
 </div>

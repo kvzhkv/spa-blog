@@ -26,11 +26,9 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    // username = username.toLowerCase();
     return this.http
       .post('api/admin/login', { username, password })
       .map(res => {
-        // console.log(res);
         if (res['ok']) {
           this.messagesService.showMessage(res['message']);
           return this.isAdminLoggedIn = true;

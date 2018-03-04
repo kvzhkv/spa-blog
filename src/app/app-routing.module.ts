@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NotFoundComponent } from './core/not-found.component';
-// import { BlogComponent } from './blog/blog.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const blogRoutes: Routes = [
     { path: 'administrator', loadChildren: 'app/admin/admin.module#AdminModule' },

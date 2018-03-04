@@ -2,10 +2,10 @@
   <div *ngIf="loading">
     <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
   </div>
-  <div *ngIf="!loading && noPosts">
+  <div *ngIf="!loading && loadedPostsNumber === 0">
     <i class="far fa-frown fa-3x fa-fw"></i>
   </div>
-  <button type="button" class="b-btn b-btn-icon b-btn-secondary" *ngIf="loadedPages !== totalPages && !loading && !scrollEvents" (click)="activateInfiniteScroll()">
+  <button type="button" class="b-btn b-btn-icon b-btn-secondary" *ngIf="loadedPostsNumber !== totalPostsNumber && !loading && !scrollEvents" (click)="activateInfiniteScroll()">
     <i class="fa fa-angle-down"></i>
   </button>
 </div>

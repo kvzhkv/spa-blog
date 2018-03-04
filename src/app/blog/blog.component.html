@@ -1,37 +1,13 @@
-<!-- <blog-tags></blog-tags> -->
-<!-- <blog-favorites *ngIf="tag === null"></blog-favorites> -->
-<h1 *ngIf="tag">{{tag}}</h1>
-
-<!-- <div class="test-container">
-  <div *ngFor="let test of tests; index as i" class="test" [ngStyle]="{'height': test[0] + 'px', 'order': test[1]}">{{i}}</div>
-</div> -->
-
+<h1 *ngIf="blogService.currentTag">{{blogService.currentTag}}</h1>
 <div class="b-posts-container">
   <div *ngFor="let column of columns" [ngClass]="'b-col-' + columns.length">
-    <div *ngFor="let post of (posts | columnFilter: column : columns.length)" class='b-post-container'>
+    <div *ngFor="let post of (blogService.posts | columnFilter: column : columns.length)" 
+      class='b-post-container'>
       <blog-post-brick [post]="post.value" [id]="post.id"></blog-post-brick>
-      <!-- <div class="b-top-container">
-        <a routerLink="/posts/{{post.id}}" class="image-link">
-          <img src={{post.value.imageUrl}}>
-        </a>
-      </div>
-      <div class="b-bottom-container">
-        <div class="b-tags-container">
-          <span *ngFor="let tag of post.value.tags; last as isLast" class="b-tag">
-            <a [routerLink]="['/tag', tag]" class="b-tag-link">{{tag}}</a><span *ngIf="!isLast">,</span>
-          </span>
-        </div>
-        <a routerLink="/posts/{{post.id}}">
-          <h2>
-            {{post.value.title}}
-          </h2>
-        </a>
-        <div class="b-text-cut">
-          {{post.value.cut}}
-        </div>
-        <div class="b-post-date">{{post.value.date | date:'mediumDate'}}</div>
-      </div> -->
     </div>
   </div>
 </div>
-<blog-infinite-loader [noPosts]="!posts.length" [loadedPages]="loadedPages" [totalPages]="totalPages" [loading]="loading" (trigger)="getPosts($event)"></blog-infinite-loader>
+<blog-infinite-loader [loadedPostsNumber]="blogService.loadedPostsNumber" 
+  [totalPostsNumber]="blogService.totalPostsNumber"
+  [loading]="blogService.loading" 
+  (trigger)="blogService.getPosts($event)"></blog-infinite-loader>

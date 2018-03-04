@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
+import { BlogTitleService } from '../../../core/blog-title.service';
 
 @Component({
   templateUrl: 'login.component.html',
@@ -13,9 +14,13 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   // public errorMessage: string;
 
-  constructor(public router: Router, private fb: FormBuilder, private authService: AuthService) { }
+  constructor(public router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    public blogTitleService: BlogTitleService) { }
 
   ngOnInit() {
+    this.blogTitleService.pushTitle('Login');
     this.loginForm = this.fb.group({
       username: [{ value: '', disabled: false }, [Validators.required]],
       password: [{ value: '', disabled: false }, [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
@@ -39,11 +44,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/administrator']);
         }
       },
-      error => {
-        // console.log('Login error', JSON.stringify(error));
-      }, () => {
-        this.loginForm.enable();
-      });
+        error => { }, () => {
+          this.loginForm.enable();
+        });
   }
 
 }

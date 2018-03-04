@@ -10,17 +10,65 @@ import { AuthService } from '../../auth/auth.service';
 @Injectable()
 export class PostsManagerService {
 
-  // public currentPage = 1;
-  // public totalPages = 1;
+  public posts: any[] = []; // FIXME: сделать post.model;
+
+  public loadedPostsNumber = 0;
+  public totalPostsNumber = 0;
+
   public postsOnPage = 9;
+
+  public loading = false;
 
   constructor(private http: HttpClient, public messagesService: MessagesService, public authService: AuthService) { }
 
-  getPosts(page: number): Observable<any> {
-    const skipNumber: number = this.postsOnPage * (page - 1);
-    return this.http.get(`api/admin/posts?limit=${this.postsOnPage}&skip=${skipNumber}`).map(res => {
-      return res;
-    }).catch(err => this.errorHandler(err));
+  emptyPosts(): void {
+    this.posts = [];
+    this.loadedPostsNumber = 0;
+    this.totalPostsNumber = 0;
+  }
+
+  getPosts(): void {
+    this.loading = true;
+    this.http.get(`api/admin/posts?limit=${this.postsOnPage}&skip=${this.loadedPostsNumber}`)
+      .catch(err => this.errorHandler(err))
+      .subscribe(res => {
+        if (res) {
+          this.posts = this.posts.concat(res['rows']);
+          this.totalPostsNumber = res['total_rows'];
+          this.loadedPostsNumber = this.posts.length;
+        }
+      }, err => { }, () => {
+        this.loading = false;
+      });
+  }
+
+  deletePost(id: string): void {
+    this.http.delete(`api/admin/posts/${id}`).map(res => {
+      return true;
+    }).catch(err => this.errorHandler(err)).subscribe(res => {
+      if (res) {
+        this.messagesService.showMessage('Post deleted');
+        this.posts = [];
+        this.loadedPostsNumber = 0;
+        this.getPosts();
+      }
+    });
+  }
+
+  publicatePost(id: string): void {
+    this.http.put(`api/admin/posts/publicate/${id}`, {}).map(res => {
+      return true;
+    }).catch(err => this.errorHandler(err)).subscribe(res => {
+      if (res) {
+        this.messagesService.showMessage('Post status changed');
+        const index = this.posts.findIndex((post) => {
+          return post.id === id;
+        });
+        if (index !== -1) {
+          this.posts[index].value.published = !this.posts[index].value.published;
+        }
+      }
+    });
   }
 
   getPost(postId: string): Observable<any> {
@@ -41,20 +89,6 @@ export class PostsManagerService {
         return true;
       }).catch(err => this.errorHandler(err));
     }
-  }
-
-  deletePost(id: string): Observable<boolean> {
-    return this.http.delete(`api/admin/posts/${id}`).map(res => {
-      this.messagesService.showMessage('Post deleted');
-      return true;
-    }).catch(err => this.errorHandler(err));
-  }
-
-  publicatePost(id: string): Observable<boolean> {
-    return this.http.put(`api/admin/posts/publicate/${id}`, {}).map(res => {
-      this.messagesService.showMessage('Post status changed');
-      return true;
-    }).catch(err => this.errorHandler(err));
   }
 
   errorHandler(error: HttpErrorResponse) {

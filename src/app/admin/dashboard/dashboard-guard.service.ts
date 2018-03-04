@@ -17,7 +17,6 @@ export class DashboardGuard implements CanActivate {
             this.router.navigate(['/administrator/login']);
             return res;
           } else {
-            // console.log(res);
             return res;
           }
         });

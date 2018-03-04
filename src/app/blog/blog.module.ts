@@ -5,7 +5,6 @@ import { BlogRoutingModule } from './blog-routing.module';
 
 import { BlogComponent } from './blog.component';
 import { PostComponent } from './post/post.component';
-import { FavoritesComponent } from './favorites/favorites.component';
 
 import { BlogService } from './blog.service';
 
@@ -17,8 +16,7 @@ import { BlogService } from './blog.service';
   exports: [],
   declarations: [
     BlogComponent,
-    PostComponent,
-    FavoritesComponent
+    PostComponent
   ],
   providers: [
     BlogService

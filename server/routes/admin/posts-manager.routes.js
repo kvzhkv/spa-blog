@@ -3,9 +3,6 @@ const router = express.Router();
 
 const rp = require('request-promise');
 
-// const QuillDeltaToHtml = require('quill-delta-to-html');
-// const Delta = require('quill-delta');
-
 const {
   authenticateAdmin
 } = require('../../helpers/auth');
@@ -13,11 +10,10 @@ const c = require('../../config');
 const errorHandler = require('../../helpers/error-handler');
 const resMessages = require('../../helpers/res-messages');
 
-router.get('/posts', authenticateAdmin, function (req, res, next) {
-  // TODO: validation
-
+router.get('/posts', authenticateAdmin, function (req, res) {
   rp.get({
-    uri: c.couchdbUrl + c.blogDbName + `/_design/admin/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
+    uri: c.couchdbUrl + c.blogDbName + 
+      `/_design/admin/_view/posts?descending=true&limit=${req.query.limit}&skip=${req.query.skip}`,
     json: true,
     auth: {
       'user': c.dbUsername,
@@ -25,14 +21,6 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
     },
     resolveWithFullResponse: true
   }).then((response) => {
-    // response.body.rows.map((post) => {
-    //   let cuttedPost = new Delta(post.value.post.text.ops).slice(0, 250);
-    //   // console.log(cuttedPost)
-    //   let converter = new QuillDeltaToHtml(cuttedPost.ops, {});
-    //   post.value.post.text = converter.convert();
-    //   return post;
-    // });
-
     res.status(200).send(response.body);
   }).catch((error) => {
     // console.log(error);
@@ -40,8 +28,7 @@ router.get('/posts', authenticateAdmin, function (req, res, next) {
   });
 });
 
-//TODO: do i need validation here?
-router.get('/posts/:id', authenticateAdmin, function (req, res, next) {
+router.get('/posts/:id', authenticateAdmin, function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/' + req.params.id,
     json: true,
@@ -58,18 +45,17 @@ router.get('/posts/:id', authenticateAdmin, function (req, res, next) {
 });
 
 // Saving post
-// TODO: add body JSON validation and add technical info
-router.post('/posts', authenticateAdmin, function (req, res, next) {
+router.post('/posts', authenticateAdmin, function (req, res) {
   if (req.body) {
     let newPost = {
       type: 'post',
       post: req.body,
       published: false
-    }
+    };
 
     newPost.post.tags = newPost.post.tags.map((item) => {
       return item.toLowerCase();
-    })
+    });
 
     rp.post({
       uri: c.couchdbUrl + c.blogDbName,
@@ -80,10 +66,10 @@ router.post('/posts', authenticateAdmin, function (req, res, next) {
       },
       body: newPost,
       resolveWithFullResponse: true
-    }).then((response) => {
+    }).then(() => {
       res.status(200).send({
-        "ok": true,
-        "message": "new post added"
+        'ok': true,
+        'message': 'new post added'
       });
     }).catch((error) => {
       res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
@@ -93,14 +79,13 @@ router.post('/posts', authenticateAdmin, function (req, res, next) {
   }
 });
 
-router.put('/posts/:id', authenticateAdmin, function (req, res, next) {
+router.put('/posts/:id', authenticateAdmin, function (req, res) {
   if (req.body) {
     let updatedPost = req.body;
 
-
     updatedPost.tags = updatedPost.tags.map((item) => {
       return item.toLowerCase();
-    })
+    });
 
     rp.get({
       uri: c.couchdbUrl + c.blogDbName + '/' + req.params.id,
@@ -135,7 +120,7 @@ router.put('/posts/:id', authenticateAdmin, function (req, res, next) {
   }
 });
 
-router.delete('/posts/:id', authenticateAdmin, function (req, res, next) {
+router.delete('/posts/:id', authenticateAdmin, function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/' + req.params.id,
     json: true,
@@ -156,7 +141,7 @@ router.delete('/posts/:id', authenticateAdmin, function (req, res, next) {
         'pass': c.dbPassword
       },
       resolveWithFullResponse: true
-    })
+    });
   }).then((response) => {
     res.status(200).send(response.body);
   }).catch((error) => {
@@ -164,7 +149,7 @@ router.delete('/posts/:id', authenticateAdmin, function (req, res, next) {
   });
 });
 
-router.put('/posts/publicate/:id', authenticateAdmin, function (req, res, next) {
+router.put('/posts/publicate/:id', authenticateAdmin, function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/' + req.params.id,
     json: true,
@@ -185,7 +170,7 @@ router.put('/posts/publicate/:id', authenticateAdmin, function (req, res, next) 
         'pass': c.dbPassword
       },
       resolveWithFullResponse: true
-    })
+    });
   }).then((response) => {
     res.status(200).send(response.body);
   }).catch((error) => {

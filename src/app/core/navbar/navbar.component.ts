@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { NavbarService } from './navbar.service';
 
-class Info {
-  facebookLink?: string;
-  instagramLink?: string;
-  vkLink?: string;
-  youtubeLink?: string;
-}
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'blog-navbar',
@@ -16,29 +11,12 @@ class Info {
 })
 
 export class NavbarComponent implements OnInit {
-  public menuItems: {} = null;
-  public info: Info = null;
-  // public tags: string[] = null;
 
-  // public showTagsList = false;
+  public env = environment;
 
   constructor(private navbarService: NavbarService) { }
 
   ngOnInit() {
-    this.getInfo();
-    // this.getTags();
+    this.navbarService.getInfo();
   }
-
-  getInfo() {
-    this.navbarService.getInfo().subscribe(res => {
-      this.menuItems = res.menuItems;
-      this.info = res.info;
-    });
-  }
-
-  // getTags() {
-  //   this.navbarService.getTags().subscribe(res => {
-  //     this.tags = res;
-  //   });
-  // }
 }

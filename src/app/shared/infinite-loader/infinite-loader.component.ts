@@ -13,11 +13,10 @@ import 'rxjs/add/operator/debounceTime';
 })
 
 export class InfiniteLoaderComponent implements OnInit, OnChanges {
-  @Input() loadedPages: number;
-  @Input() totalPages: number;
+  @Input() loadedPostsNumber: number;
+  @Input() totalPostsNumber: number;
   @Input() loading: boolean;
-  @Input() noPosts: boolean;
-  @Output() trigger: EventEmitter<number> = new EventEmitter();
+  @Output() trigger: EventEmitter<any> = new EventEmitter();
 
   private scrollStream;
   public scrollEvents;
@@ -29,7 +28,7 @@ export class InfiniteLoaderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.loadedPages === this.totalPages && this.scrollEvents) {
+    if (this.loadedPostsNumber === this.totalPostsNumber && this.scrollEvents) {
       this.deactivateInfiniteScroll();
     }
   }
@@ -51,8 +50,8 @@ export class InfiniteLoaderComponent implements OnInit, OnChanges {
   }
 
   activateInfiniteScroll() {
-    this.trigger.emit(this.loadedPages + 1);
-    this.scrollEvents = this.scrollStream.subscribe(() => this.trigger.emit(this.loadedPages + 1));
+    this.trigger.emit(null);
+    this.scrollEvents = this.scrollStream.subscribe(() => this.trigger.emit(null));
   }
 
   deactivateInfiniteScroll() {

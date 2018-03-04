@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
 import { BlogService } from './blog.service';
+import { BlogTitleService } from '../core/blog-title.service';
 
 @Component({
   templateUrl: 'blog.component.html'
@@ -14,31 +15,21 @@ import { BlogService } from './blog.service';
 
 export class BlogComponent implements OnInit, OnDestroy {
 
-  public posts: any[] = [];
-  public tag: string = null;
-
-  public loadedPages = 0;
-  public totalPages = 0;
-
-  public loading = false;
-
   public columns: number[];
-
   private resizeEvents;
 
-  constructor(public blogService: BlogService, public route: ActivatedRoute) { }
+  constructor(public blogService: BlogService, public route: ActivatedRoute, public blogTitleService: BlogTitleService) { }
 
   ngOnInit() {
-    // console.log('init blog component');
     this.registerResizeEvent();
     this.setColumnsNumber();
     this.route.paramMap.subscribe(params => {
-      this.tag = params.get('tagName');
-      // console.log('changing tag');
-      this.posts = [];
-      this.totalPages = 0;
-      this.loadedPages = 0;
-      this.getPosts(this.loadedPages + 1);
+      if (this.blogService.currentTag !== params.get('tagName') || this.blogService.loadedPostsNumber === 0) {
+        this.blogService.currentTag = params.get('tagName');
+        this.blogTitleService.pushTitle(this.blogService.currentTag);
+        this.blogService.emptyPosts();
+        this.blogService.getPosts();
+      }
     });
   }
 
@@ -73,20 +64,5 @@ export class BlogComponent implements OnInit, OnDestroy {
     } else if (window.matchMedia('(max-width: 599px)').matches) {
       this.columns = [0];
     }
-  }
-
-  getPosts(page: number): void {
-    this.loading = true;
-    this.blogService.getPosts(page, this.tag).subscribe(res => {
-      if (res) {
-        this.posts = this.posts.concat(res['rows']);
-        // this.populateCols(this.posts);
-        // console.log(this.columns);
-        this.totalPages = Math.ceil(res['total_rows'] / this.blogService.postsOnPage);
-        this.loadedPages = Math.ceil(this.posts.length / this.blogService.postsOnPage);
-      }
-    }, err => { }, () => {
-      this.loading = false;
-    });
   }
 }
