@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
 
   public env = environment;
 
-  constructor(private navbarService: NavbarService) { }
+  constructor(public navbarService: NavbarService) { }
 
   ngOnInit() {
     this.navbarService.getInfo();
