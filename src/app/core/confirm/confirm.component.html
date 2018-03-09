@@ -1,0 +1,18 @@
+<div class="b-confirm-overlay" *ngIf="confirmMessage" [@appearInOut]="'in'">
+</div>
+<div class="b-confirm-container" *ngIf="confirmMessage" [@flyInOut]="'in'">
+  <div class="b-confirm-icon">
+    <i class="fas fa-question-circle fa-3x"></i>
+  </div>
+  <div class="b-confirm-question">
+    {{confirmMessage.message}}
+  </div>
+  <div class="b-confirm-buttons">
+    <button type="button" class="b-btn b-btn-text b-btn-secondary" (click)="action(true)">
+      {{confirmMessage.okButton}}
+    </button>
+    <button type="button" class="b-btn b-btn-text b-btn-primary" (click)="action(false)">
+      {{confirmMessage.cancelButton}}
+    </button>
+  </div>
+</div>

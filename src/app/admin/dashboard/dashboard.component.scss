@@ -1,14 +1,10 @@
 @import '~app/variables';
 
 .b-dashboard {
-  // position: fixed;
   border-bottom: 1px solid $lines-color;
   background-color: white;
   font-family: $main-font, serif, Times;
-  z-index: 1000;
   width: 100%;
-  // left: 0;
-  // top: 60;
   line-height: 30px;
   text-align: center;
   display: block;

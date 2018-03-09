@@ -8,6 +8,7 @@ import 'rxjs/add/operator/filter';
 
 import { PostsManagerService } from '../posts-manager.service';
 import { BlogTitleService } from '../../../../core/blog-title.service';
+import { ConfirmService } from '../../../../core/confirm/confirm.service';
 
 @Component({
   templateUrl: 'posts.component.html',
@@ -21,7 +22,8 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   constructor(public postsManagerService: PostsManagerService,
     public router: Router,
-    public blogTitleService: BlogTitleService) { }
+    public blogTitleService: BlogTitleService,
+    public confirmService: ConfirmService) { }
 
   ngOnInit() {
     this.blogTitleService.pushTitle('Posts Manager');
@@ -69,7 +71,12 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   deletePost(postId: string) {
-    this.postsManagerService.deletePost(postId);
+    this.confirmService.confirm(`Are you sure you want to delete post ${postId}?`, 'Delete', 'Cancel')
+      .subscribe((value) => {
+        if (value) {
+          this.postsManagerService.deletePost(postId);
+        }
+      });
   }
 
   publicatePost(postId: string) {

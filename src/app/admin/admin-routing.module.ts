@@ -10,6 +10,7 @@ import { MenuManagerComponent } from './dashboard/menu-manager/menu-manager.comp
 import { MediaManagerComponent } from './dashboard/media-manager/media-manager.component';
 import { PostsComponent } from './dashboard/posts-manager/posts/posts.component';
 import { EditPostComponent } from './dashboard/posts-manager/edit-post/edit-post.component';
+import { CanDeactivateGuardService } from './can-deactivate-guard.service';
 
 const adminRoutes: Routes = [
   {
@@ -27,12 +28,12 @@ const adminRoutes: Routes = [
             path: '', component: PostsComponent
           },
           {
-            path: 'edit/:postId', component: EditPostComponent
+            path: 'edit/:postId', component: EditPostComponent, canDeactivate: [CanDeactivateGuardService]
           }
         ]
       },
       {
-        path: 'menu-manager', canActivate: [DashboardGuard], component: MenuManagerComponent
+        path: 'menu-manager', canActivate: [DashboardGuard], component: MenuManagerComponent, canDeactivate: [CanDeactivateGuardService]
       },
       {
         path: 'media-manager', canActivate: [DashboardGuard], component: MediaManagerComponent

@@ -19,6 +19,7 @@ import { MenuManagerService } from './dashboard/menu-manager/menu-manager.servic
 import { MediaManagerService } from './dashboard/media-manager/media-manager.service';
 import { DateValueAccessorDirective } from './dashboard/posts-manager/edit-post/date-value-accessor.directive';
 import { FileAccessorDirective } from './dashboard/media-manager/file-value-accessor.directive';
+import { CanDeactivateGuardService } from './can-deactivate-guard.service';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { FileAccessorDirective } from './dashboard/media-manager/file-value-acce
     DashboardGuard,
     PostsManagerService,
     MenuManagerService,
+    CanDeactivateGuardService,
     MediaManagerService
   ],
 })

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import { MediaManagerService } from './media-manager.service';
 import { BlogTitleService } from '../../../core/blog-title.service';
+import { ConfirmService } from '../../../core/confirm/confirm.service';
 
 @Component({
   selector: 'blog-media-manager',
@@ -20,7 +21,8 @@ export class MediaManagerComponent implements OnInit {
 
   constructor(public mediaManagerService: MediaManagerService,
     public fb: FormBuilder,
-    public blogTitleService: BlogTitleService) { }
+    public blogTitleService: BlogTitleService,
+    public confirmService: ConfirmService) { }
 
   ngOnInit() {
     if (!this.editPostMode) {
@@ -62,10 +64,15 @@ export class MediaManagerComponent implements OnInit {
   }
 
   deleteFile(fileName: string) {
-    this.mediaManagerService.deleteFile(fileName).subscribe(res => {
-      if (res) {
-        this.getList();
-      }
-    });
+    this.confirmService.confirm(`Are you sure you want to delete file ${fileName}?`, 'Delete', 'Cancel')
+      .subscribe((value) => {
+        if (value) {
+          this.mediaManagerService.deleteFile(fileName).subscribe(res => {
+            if (res) {
+              this.getList();
+            }
+          });
+        }
+      });
   }
 }

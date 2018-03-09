@@ -18,6 +18,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessagesService } from './messages/messages.service';
 import { FooterComponent } from './footer/footer.component';
 import { BlogTitleService } from './blog-title.service';
+import { ConfirmComponent } from './confirm/confirm.component';
+import { ConfirmService } from './confirm/confirm.service';
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { BlogTitleService } from './blog-title.service';
     LoadingBarComponent,
     NavbarComponent,
     MessagesComponent,
+    ConfirmComponent,
     FooterComponent,
     BrowserAnimationsModule
   ],
@@ -39,11 +42,13 @@ import { BlogTitleService } from './blog-title.service';
     NotFoundComponent,
     MessagesComponent,
     FooterComponent,
+    ConfirmComponent
   ],
   providers: [
     NavbarService,
     LoadingBarService,
     MessagesService,
+    ConfirmService,
     BlogTitleService,
     { provide: LOCALE_ID, useValue: 'ru-RU' },
     {

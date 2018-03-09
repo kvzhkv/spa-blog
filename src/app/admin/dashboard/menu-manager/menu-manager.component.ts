@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 
 import { MenuManagerService } from './menu-manager.service';
 import { NavbarService } from '../../../core/navbar/navbar.service';
 import { BlogTitleService } from '../../../core/blog-title.service';
+import { ConfirmService } from '../../../core/confirm/confirm.service';
 
 
 @Component({
@@ -14,11 +16,13 @@ import { BlogTitleService } from '../../../core/blog-title.service';
 export class MenuManagerComponent implements OnInit {
 
   public editMenuForm: FormGroup;
+  private savedMenu: any;
 
   constructor(public menuManagerService: MenuManagerService,
     private fb: FormBuilder,
     public navbarService: NavbarService,
-    public blogTitleService: BlogTitleService) { }
+    public blogTitleService: BlogTitleService,
+    public confirmService: ConfirmService) { }
 
   ngOnInit() {
     this.blogTitleService.pushTitle('Menu Manager');
@@ -32,6 +36,7 @@ export class MenuManagerComponent implements OnInit {
     this.menuManagerService.getMenu().subscribe(res => {
       if (res) {
         this.setMenuItems(res.menuItems);
+        this.savedMenu = res;
       }
     });
   }
@@ -77,7 +82,16 @@ export class MenuManagerComponent implements OnInit {
     this.menuManagerService.saveMenu(this.editMenuForm.value).subscribe(res => {
       if (res) {
         this.navbarService.getInfo();
+        this.savedMenu = this.editMenuForm.value;
       }
     });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (JSON.stringify(this.editMenuForm.value) !== JSON.stringify(this.savedMenu)) {
+      return this.confirmService.confirm('You have unsaved changes. Are you sure you want to leave this page?');
+    } else {
+      return true;
+    }
   }
 }

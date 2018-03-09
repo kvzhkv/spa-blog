@@ -1,0 +1,38 @@
+.b-confirm-overlay {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow: auto;
+  z-index: 4;
+}
+
+.b-confirm-container {
+  position: fixed; // text-align: center;
+  top: 10px;
+  left: 0;
+  right: 0;
+  width: 95%;
+  max-width: 400px;
+  padding: 20px 20px 70px 60px;
+  border-radius: 5px;
+  margin: 0 auto;
+  background-color: #fff;
+  z-index: 5;  
+  .b-confirm-icon {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+  .b-confirm-question {
+    font-size: 1.2rem;
+  }
+  .b-confirm-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+}

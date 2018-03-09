@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 // import { Quill } from 'quill';
 
@@ -8,6 +9,7 @@ const Quill = require('quill');
 
 import { PostsManagerService } from '../posts-manager.service';
 import { BlogTitleService } from '../../../../core/blog-title.service';
+import { ConfirmService } from '../../../../core/confirm/confirm.service';
 
 @Component({
   templateUrl: 'edit-post.component.html',
@@ -20,8 +22,9 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public editPostForm: FormGroup;
   public tagsFormArray: FormArray;
-  public post: any;
+  // public post: any;
   public postId: string;
+  public savedPost: any;
 
   public quill: any;
 
@@ -31,7 +34,8 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     public route: ActivatedRoute,
     private fb: FormBuilder,
     public postsManagerService: PostsManagerService,
-    public blogTitleService: BlogTitleService) { }
+    public blogTitleService: BlogTitleService,
+    public confirmService: ConfirmService) { }
 
   ngOnInit() {
     this.tagsFormArray = this.fb.array([[{ value: '', disabled: false }, [Validators.required]]]);
@@ -85,6 +89,7 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     this.postsManagerService.getPost(id).subscribe(res => {
       if (res) {
         this.updateForm(res);
+        this.savedPost = res;
         this.blogTitleService.pushTitle(`Edit post - ${res.title}`);
       }
     });
@@ -107,14 +112,13 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     this.postsManagerService.savePost(this.editPostForm.value, this.postId !== '0' ? this.postId : undefined)
       .subscribe(res => {
         if (res) {
-          this.editPostForm.reset();
+          this.savedPost = this.editPostForm.value;
           this.router.navigate(['/administrator/posts-manager']);
         }
       });
   }
 
   cancel() {
-    this.editPostForm.reset();
     this.router.navigate(['/administrator/posts-manager']);
   }
 
@@ -149,5 +153,14 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.quill = undefined;
+    this.editPostForm.reset();
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (JSON.stringify(this.editPostForm.value) !== JSON.stringify(this.savedPost)) {
+      return this.confirmService.confirm('You have unsaved changes. Are you sure you want to leave this page?');
+    } else {
+      return true;
+    }
   }
 }
