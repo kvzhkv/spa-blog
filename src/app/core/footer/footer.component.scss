@@ -1,22 +1,50 @@
 @import '~app/variables';
-
 footer {
   border-top: 1px solid $lines-color;
   font-family: 'PT Sans', serif, Times;
-  color: grey;
+  color: $main-font-color;
   width: 100%;
-  height: $footer-height;
   .b-footer-container {
     padding: 0 20px;
-    display: flex;
+    // display: flex;
     .b-copyright {
-      display: inline-block;
+      // display: inline-block;
       line-height: $footer-height;
     }
     .b-author {
       line-height: $footer-height;
-      display: inline-block;
-      margin-left: auto;
     }
+  }
+}
+
+@media #{$media-sm} {
+  .b-footer-container {
+    display: block;
+  }
+  .b-copyright {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+  .b-author {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+@media #{$media-md}, #{$media-lg} {
+  footer {
+    height: $footer-height;
+    .b-footer-container {
+      display: flex;
+    }
+  }
+  .b-copyright {
+    display: inline-block;
+  }
+  .b-author {
+    display: inline-block;
+    margin-left: auto;
   }
 }

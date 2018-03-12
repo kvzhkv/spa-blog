@@ -5,6 +5,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'blog-infinite-loader',
@@ -18,8 +19,8 @@ export class InfiniteLoaderComponent implements OnInit, OnChanges {
   @Input() loading: boolean;
   @Output() trigger: EventEmitter<any> = new EventEmitter();
 
-  private scrollStream;
-  public scrollEvents;
+  private scrollStream: Observable<any>;
+  public scrollEvents: Subscription;
 
   constructor() { }
 

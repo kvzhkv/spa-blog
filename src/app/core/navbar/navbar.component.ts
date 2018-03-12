@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 export class NavbarComponent implements OnInit {
 
   public env = environment;
+  public showMobileMenu = false;
 
   constructor(public navbarService: NavbarService) { }
 

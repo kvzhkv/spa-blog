@@ -23,38 +23,33 @@
     <div class="b-icons-container">
       <div class="b-icon-container" *ngIf="navbarService.info?.facebookLink">
         <a [href]=navbarService.info.facebookLink target="_blank">
-            <span class="b-icon">
-                <i class="fab fa-facebook-f" aria-hidden='true'></i>              
-            </span>
-          </a>
+          <span class="b-icon">
+            <i class="fab fa-facebook-f" aria-hidden='true'></i>
+          </span>
+        </a>
       </div>
       <div class="b-icon-container" *ngIf="navbarService.info?.vkLink">
         <a [href]=navbarService.info.vkLink target="_blank">
-            <span class="b-icon">
-                <i class="fab fa-vk" aria-hidden='true'></i>              
-            </span>
-          </a>
+          <span class="b-icon">
+            <i class="fab fa-vk" aria-hidden='true'></i>
+          </span>
+        </a>
       </div>
       <div class="b-icon-container" *ngIf="navbarService.info?.instagramLink">
         <a [href]=navbarService.info.instagramLink target="_blank">
-            <span class="b-icon">
-              <i class="fab fa-instagram" aria-hidden='true'></i>
-            </span>
-          </a>
+          <span class="b-icon">
+            <i class="fab fa-instagram" aria-hidden='true'></i>
+          </span>
+        </a>
       </div>
       <div class="b-icon-container" *ngIf="navbarService.info?.youtubeLink">
-          <a [href]=navbarService.info.youtubeLink target="_blank">
-              <span class="b-icon">
-                <i class="fab fa-youtube" aria-hidden='true'></i>
-              </span>
-            </a>
-        </div>
-      <!-- <div class="b-icon-container">
-        <span class="b-icon">
-          <i class="fas fa-search"></i>
-        </span>
-      </div> -->
-      <!-- Temporary -->
+        <a [href]=navbarService.info.youtubeLink target="_blank">
+          <span class="b-icon">
+            <i class="fab fa-youtube" aria-hidden='true'></i>
+          </span>
+        </a>
+      </div>
+      <!-- Admin section link - only for dev -->
       <div class="b-icon-container" *ngIf="!env.production">
         <span class="b-icon">
           <a routerLink='/administrator' routerLinkActive='b-active-link'>
@@ -62,6 +57,28 @@
           </a>
         </span>
       </div>
+      <div class="b-search-container">
+        <span class="b-icon">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <!-- Mobile menu icon -->
+      <div class="b-mob-menu-button">
+        <span class="b-icon" (click)="showMobileMenu = !showMobileMenu" [ngClass]="{'b-active-link': showMobileMenu}">
+          <i class="fas fa-bars"></i>
+        </span>
+      </div>
     </div>
+  </div>
+  <!-- Mobile menu -->
+  <div class='b-mob-menu-container' *ngIf="showMobileMenu">
+      <div *ngFor="let menuItem of navbarService.menuItems">
+        <div class="b-mob-menu-item">
+          <a routerLink='/tag/{{menuItem.tag}}' (click)="showMobileMenu = false" routerLinkActive='b-active-link'>{{menuItem.tag}}</a>
+        </div>
+        <div class="b-mob-menu-item b-mob-subtag" *ngFor="let subtag of menuItem.subtags">
+          <a routerLink='/tag/{{subtag}}' (click)="showMobileMenu = false" routerLinkActive='b-active-link'>{{subtag}}</a>
+        </div>
+      </div>
   </div>
 </nav>

@@ -1,11 +1,7 @@
 @import '~app/variables';
-
 nav {
-  display: block;
-  position: fixed;
   z-index: 1;
   border-bottom: 1px solid $lines-color;
-  top:0;
   width: 100%;
   background-color: white;
   height: $navbar-height;
@@ -16,7 +12,6 @@ nav {
 
 .b-navbar-container {
   box-sizing: border-box;
-  padding: 0 20px;
   margin-right: auto;
   margin-left: auto;
   width: 100%;
@@ -27,7 +22,6 @@ nav {
 }
 
 .b-menu-container {
-  display: inline-block;
   margin: auto 10px;
   height: 100%;
   ul {
@@ -96,7 +90,7 @@ nav {
   height: $logo-height;
   width: $logo-height;
   display: inline-block;
-  margin: auto 0;
+  margin: auto 0 auto 20px;
   img {
     position: relative;
     border-radius: 50%;
@@ -105,30 +99,94 @@ nav {
 }
 
 .b-icons-container {
-  display: inline-block;
+  display: flex;
   margin-left: auto;
   height: 100%;
+  padding: 15px 0;
   .b-icon-container {
     position: relative;
     display: inline-block;
     height: 100%;
-    margin: 0 10px 0 0;
+    margin: 0 3px 0 3px;
+    padding: 0 4px 0 4px;
   }
 }
 
 .b-icon {
   text-align: center;
   vertical-align: middle;
-  line-height: $navbar-height;
-  font-size: 1.1rem;
+  line-height: $navbar-height - 30px;
 }
 
 .b-search-container {
-  display: block;
-  margin: auto 3px auto auto;
-  float: right;
-
+  display: inline-block;
+  margin: 0 0 0 5px;
+  padding: 0 11px 0 13px;
+  border-left: 1px solid $lines-color;
   input {
     border: 0;
+  }
+}
+
+@media #{$media-lg} {
+  nav {
+    display: block;
+    position: fixed;
+    top: 0;
+  }
+  .b-menu-container {
+    display: inline-block;
+  }
+  .b-icons-container {
+    margin-right: 20px;
+  }
+  .b-icon {
+    font-size: 1.1rem;
+  }
+  .b-mob-menu-button {
+    display: none;
+  } // .b-navbar-container {
+  //   padding: 0 20px;    
+  // }
+  .b-mob-menu-container {
+    display: none;
+  }
+}
+
+@media #{$media-md},
+#{$media-sm} {
+  nav {
+    display: block;
+    position: relative;
+  }
+  .b-menu-container {
+    display: none;
+  }
+  .b-icon {
+    font-size: 1.5rem;
+  }
+  .b-mob-menu-button {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    margin: 0;
+    padding: 0 15px 0 15px;
+    border-left: 1px solid $lines-color;
+  }
+  .b-mob-menu-container {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    border-top: 1px solid $lines-color;
+    text-transform: uppercase;
+    text-align: right;
+    .b-mob-menu-item {
+      border-bottom: 1px solid $lines-color;
+      padding: 10px;
+    }  
+    .b-mob-subtag {
+      font-size: 0.8rem;
+      padding-right: 15px;
+    }
   }
 }

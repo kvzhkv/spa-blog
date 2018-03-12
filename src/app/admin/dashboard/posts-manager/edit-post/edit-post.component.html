@@ -13,15 +13,10 @@
       </div>
     </div>
     <!-- PREVIEW MODE -->
-    <div *ngIf="!editMode" class="b-preview" (mouseenter)="editPostForm.showEditHeaderButton = true" (mouseleave)="editPostForm.showEditHeaderButton = false">
+    <div *ngIf="!editMode">
       <blog-post-header [title]="editPostForm.controls.title.value" [tags]="editPostForm.controls.tags.value" [date]="editPostForm.controls.date.value"></blog-post-header>
       <div *ngIf="editPostForm.controls.cut.value" class="b-cut-preview">
         {{editPostForm.controls.cut.value}}
-      </div>
-      <div class="b-edit-button-container" *ngIf="editPostForm.showEditHeaderButton">
-        <button type="button" (click)="editMode = true" class="b-btn b-btn-icon b-btn-primary">
-          <i class='fas fa-pencil-alt'></i>
-        </button>
       </div>
     </div>
 
@@ -51,8 +46,6 @@
       <div>
         <textarea cols="25" rows="3" formControlName="cut" placeholder="Cut"></textarea>
       </div>
-      <button type="button" class="b-btn b-btn-text b-btn-primary" *ngIf="editMode" [disabled]="!editPostForm.controls.date.valid || !editPostForm.controls.title.valid || !editPostForm.controls.tags.valid"
-        (click)="editMode = false">Preview</button>
     </div>
 
     <!-- TEXT -->
@@ -60,9 +53,26 @@
       <div id="b-quill-editor"></div>
     </div>
     <!-- BUTTONS -->
-    <div class="b-btn-container">
-      <button class="b-btn b-btn-text b-btn-primary" type="submit" [disabled]="!editPostForm.valid">Save Post</button>
-      <button class="b-btn b-btn-text b-btn-secondary" type="button" (click)="cancel()">Cancel</button>
+    <div class="b-post-buttons-container">
+      <div class="b-post-button">
+        <button class="b-btn b-btn-icon b-btn-secondary" type="button" (click)="cancel()">
+          <i class="fa fa-arrow-left"></i>
+        </button>
+      </div>
+      <div class="b-post-button">
+        <button type="button" class="b-btn b-btn-icon b-btn-success" *ngIf="editMode" [disabled]="!editPostForm.controls.date.valid || !editPostForm.controls.title.valid || !editPostForm.controls.tags.valid"
+          (click)="editMode = false">
+          <i class="fas fa-check"></i>
+        </button>
+        <button type="button" *ngIf="!editMode" (click)="editMode = true" class="b-btn b-btn-icon b-btn-primary">
+          <i class='fas fa-pencil-alt'></i>
+        </button>
+      </div>
+      <div class="b-post-button">
+        <button class="b-btn b-btn-icon b-btn-primary" type="submit" [disabled]="!editPostForm.valid">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
     </div>
   </form>
   <!-- <div class="b-tech">

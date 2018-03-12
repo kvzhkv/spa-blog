@@ -48,15 +48,6 @@
 
 .b-preview {
   position: relative;
-  .b-edit-button-container {
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.8;
-  }
 }
 
 .b-image-field {
@@ -90,6 +81,3 @@
   border-bottom: 1px solid $lines-color;  
 }
 
-.b-btn-container {
-  text-align: right;
-}

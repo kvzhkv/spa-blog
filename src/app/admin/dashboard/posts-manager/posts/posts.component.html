@@ -8,8 +8,8 @@
     <div *ngFor="let column of columns" [ngClass]="'b-col-' + columns.length">
       <div *ngFor="let post of (postsManagerService.posts | columnFilter: column : columns.length)" class='b-post-container'>
         <!-- EDIT PANEL -->
-        <div class="b-edit-panel" (mouseenter)="post.showButtons = true" (mouseleave)="post.showButtons = false" [ngClass]="{'b-hidden-post': !post.value.published}">
-          <div class="b-edit-buttons" *ngIf="post.showButtons">
+        <div class="b-edit-panel" [ngClass]="{'b-hidden-post': !post.value.published}">
+          <div class="b-edit-buttons">
             <button type="button" class="b-btn b-btn-icon" [ngClass]="{'b-btn-secondary': post.value.published,'b-btn-success': !post.value.published}"
               (click)=publicatePost(post.id)>
               <span *ngIf="post.value.published">

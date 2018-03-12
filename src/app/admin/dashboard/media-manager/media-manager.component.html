@@ -19,13 +19,12 @@
     </div>
   </div>
   <div class="b-file-tile" *ngFor="let item of filesList">
-    <div class="b-tile-image" [ngStyle]="{'background-image': 'url(/media/' + item.name +')'}" (mouseenter)="item.showButtons = true"
-      (mouseleave)="item.showButtons = false">
-      <div class="b-image-buttons-container" *ngIf="item.showButtons">
-        <button type="button" *ngIf="editPostMode" [disabled]="!item.showButtons" class="b-btn b-btn-icon b-btn-success" (click)=selectFile(item.name)>
+    <div class="b-tile-image" [ngStyle]="{'background-image': 'url(/media/' + item.name +')'}">
+      <div class="b-image-buttons-container">
+        <button type="button" *ngIf="editPostMode" class="b-btn b-btn-icon b-btn-success" (click)=selectFile(item.name)>
           <i class='fas fa-check'></i>
         </button>
-        <button type="button" class="b-btn b-btn-icon b-btn-danger" [disabled]="!item.showButtons" (click)=deleteFile(item.name)>
+        <button type="button" class="b-btn b-btn-icon b-btn-danger" (click)=deleteFile(item.name)>
           <i class='fas fa-times'></i>
         </button>
       </div>

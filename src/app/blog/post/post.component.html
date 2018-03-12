@@ -5,11 +5,16 @@
   <blog-post-header [title]="post.title" [tags]="post.tags" [date]="post.date"></blog-post-header>
   <div id="b-quill-renderer">
   </div>
-  <div class="b-post-buttons">
-    <div>
+  <div class="b-post-buttons-container">
+    <div class="b-post-button">
       <button type="button" class="b-btn b-btn-icon b-btn-secondary" (click)="goBack()">
         <i class="fa fa-angle-left"></i>
       </button>
     </div>
+    <!-- <div class="b-post-button">
+      <button type="button" class="b-btn b-btn-icon b-btn-secondary" (click)="goBack()">
+        <i class="fa fa-angle-left"></i>
+      </button>
+    </div> -->
   </div>
 </div>
