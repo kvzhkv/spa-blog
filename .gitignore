@@ -6,6 +6,10 @@
 /out-tsc
 /server/public
 
+# angular env files
+/src/environments/environment.dev.ts
+/src/environments/environment.prod.ts
+
 # dependencies
 /node_modules
 

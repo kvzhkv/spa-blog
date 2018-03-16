@@ -5,6 +5,11 @@
 
 export const environment = {
   production: false,
-  lgMinScreenWidth: 992,
-  mdMinScreenWidth: 576
+  lgMinScreenWidth: null, // integer
+  mdMinScreenWidth: null, // integer
+  blogTitle: '',
+  facebookLink: '',
+  instagramLink: '',
+  youtubeLink: '',
+  vkLink: '',
 };
