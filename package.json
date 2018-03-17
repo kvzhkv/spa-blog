@@ -10,9 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "pm2-dev start ecosystem.config.js",
-    "server-prod": "pm2-dev start ecosystem.config.js --env production",
-    "deploy": "pm2 deploy ecosystem.config.js production"
+    "server": "pm2-dev start ecosystem.config.js"
   },
   "private": true,
   "dependencies": {
