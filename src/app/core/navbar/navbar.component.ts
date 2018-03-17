@@ -18,6 +18,6 @@ export class NavbarComponent implements OnInit {
   constructor(public navbarService: NavbarService) { }
 
   ngOnInit() {
-    this.navbarService.getInfo();
+    this.navbarService.getMenu();
   }
 }

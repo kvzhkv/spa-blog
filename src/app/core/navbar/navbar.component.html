@@ -21,29 +21,29 @@
     </div>
     <!-- ICONS -->
     <div class="b-icons-container">
-      <div class="b-icon-container" *ngIf="navbarService.info?.facebookLink">
-        <a [href]=navbarService.info.facebookLink target="_blank">
+      <div class="b-icon-container" *ngIf="env.facebookLink">
+        <a [href]=env.facebookLink target="_blank">
           <span class="b-icon">
             <i class="fab fa-facebook-f" aria-hidden='true'></i>
           </span>
         </a>
       </div>
-      <div class="b-icon-container" *ngIf="navbarService.info?.vkLink">
-        <a [href]=navbarService.info.vkLink target="_blank">
+      <div class="b-icon-container" *ngIf="env.vkLink">
+        <a [href]=env.vkLink target="_blank">
           <span class="b-icon">
             <i class="fab fa-vk" aria-hidden='true'></i>
           </span>
         </a>
       </div>
-      <div class="b-icon-container" *ngIf="navbarService.info?.instagramLink">
-        <a [href]=navbarService.info.instagramLink target="_blank">
+      <div class="b-icon-container" *ngIf="env.instagramLink">
+        <a [href]=env.instagramLink target="_blank">
           <span class="b-icon">
             <i class="fab fa-instagram" aria-hidden='true'></i>
           </span>
         </a>
       </div>
-      <div class="b-icon-container" *ngIf="navbarService.info?.youtubeLink">
-        <a [href]=navbarService.info.youtubeLink target="_blank">
+      <div class="b-icon-container" *ngIf="env.youtubeLink">
+        <a [href]=env.youtubeLink target="_blank">
           <span class="b-icon">
             <i class="fab fa-youtube" aria-hidden='true'></i>
           </span>

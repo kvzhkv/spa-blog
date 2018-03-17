@@ -8,8 +8,8 @@ export const environment = {
   lgMinScreenWidth: null, // integer
   mdMinScreenWidth: null, // integer
   blogTitle: '',
-  facebookLink: '',
   instagramLink: '',
-  youtubeLink: '',
+  facebookLink: '',
   vkLink: '',
+  youtubeLink: ''
 };

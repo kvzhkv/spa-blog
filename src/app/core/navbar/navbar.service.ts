@@ -12,34 +12,17 @@ class MenuItem {
   subtags: string[];
 }
 
-class Info {
-  blogTitle?: string;
-  facebookLink?: string;
-  instagramLink?: string;
-  vkLink?: string;
-  youtubeLink?: string;
-}
-
 @Injectable()
 export class NavbarService {
 
   public menuItems: MenuItem[] = [];
-  public info: Info = null;
 
-  constructor(private http: HttpClient, public messagesService: MessagesService, public blogTitleService: BlogTitleService) { }
+  constructor(private http: HttpClient, public messagesService: MessagesService) { }
 
-  getdata() {
-    return this.http.get('api/blog/info').catch(err => this.errorHandler(err));
-  }
-
-  getInfo() {
-    this.http.get('api/blog/info').catch(err => this.errorHandler(err)).subscribe((res) => {
+  getMenu() {
+    this.http.get('api/blog/menu').catch(err => this.errorHandler(err)).subscribe((res) => {
       if (res) {
         this.menuItems = res.menuItems;
-        this.info = res.info;
-        if (this.info.blogTitle) {
-          this.blogTitleService.pushBlogName(this.info.blogTitle);
-        }
       }
     });
   }

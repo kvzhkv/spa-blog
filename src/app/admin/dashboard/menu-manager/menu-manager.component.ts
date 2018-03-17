@@ -81,7 +81,7 @@ export class MenuManagerComponent implements OnInit {
   saveMenu() {
     this.menuManagerService.saveMenu(this.editMenuForm.value).subscribe(res => {
       if (res) {
-        this.navbarService.getInfo();
+        this.navbarService.getMenu();
         this.savedMenu = this.editMenuForm.value;
       }
     });

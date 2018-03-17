@@ -6,7 +6,7 @@ const c = require('../config');
 
 const errorHandler = require('../helpers/error-handler');
 
-router.get('/info', function (req, res) {
+router.get('/menu', function (req, res) {
   rp.get({
     uri: c.couchdbUrl + c.blogDbName + '/menu',
     json: true,
@@ -17,14 +17,7 @@ router.get('/info', function (req, res) {
     resolveWithFullResponse: true
   }).then((response) => {
     res.status(200).send({
-      menuItems: response.body.menuItems,
-      info: {
-        blogTitle: c.blogTitle,
-        instagramLink: c.instagramLink,
-        facebookLink: c.facebookLink,
-        vkLink: c.vkLink,
-        youtubeLink: c.youtubeLink
-      }
+      menuItems: response.body.menuItems
     });
   }).catch((error) => {
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));

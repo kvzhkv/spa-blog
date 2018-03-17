@@ -3,31 +3,27 @@ import { Title } from '@angular/platform-browser';
 
 import { NavbarService } from './navbar/navbar.service';
 
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class BlogTitleService {
 
-  private blogName = '';
-  private title = '';
+  private blogTitle = environment.blogTitle;
 
   constructor(private titleService: Title) { }
 
   pushTitle(title: string) {
-    this.title = title ? title.charAt(0).toUpperCase() + title.slice(1) : '';
-    this.titleService.setTitle(this.createTitle());
+    const titleUppercased = title ? title.charAt(0).toUpperCase() + title.slice(1) : '';
+    this.titleService.setTitle(this.createTitle(titleUppercased));
   }
 
-  private createTitle(): string {
-    if (this.title && this.blogName) {
-      return this.title + ' - ' + this.blogName;
-    } else if (this.title || this.blogName) {
-      return this.title || this.blogName;
+  private createTitle(title: string): string {
+    if (title && this.blogTitle) {
+      return title + ' - ' + this.blogTitle;
+    } else if (title || this.blogTitle) {
+      return title || this.blogTitle;
     } else {
       return '';
     }
-  }
-
-  pushBlogName(name: string) {
-    this.blogName = name;
-    this.titleService.setTitle(this.createTitle());
   }
 }

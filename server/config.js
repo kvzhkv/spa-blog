@@ -21,11 +21,11 @@ module.exports = {
   cookieSecret: process.env.COOKIE_SECRET,
   cookieMaxAge: parseInt(process.env.COOKIE_MAX_AGE, 10),
   // Personal info
-  blogTitle: process.env.BLOG_TITLE,
-  instagramLink: process.env.INSTAGRAM_LINK,
-  facebookLink: process.env.FACEBOOK_LINK,
-  vkLink: process.env.VK_LINK,
-  youtubeLink: process.env.YOUTUBE_LINK,
+  // blogTitle: process.env.BLOG_TITLE,
+  // instagramLink: process.env.INSTAGRAM_LINK,
+  // facebookLink: process.env.FACEBOOK_LINK,
+  // vkLink: process.env.VK_LINK,
+  // youtubeLink: process.env.YOUTUBE_LINK,
   // init section
   enableInitScripts: process.env.ENABLE_INIT_SCRIPTS === 'true',
   blogAdminUsername: process.env.BLOG_ADMIN_USERNAME,
