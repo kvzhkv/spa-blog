@@ -11,5 +11,7 @@ export const environment = {
   instagramLink: '',
   facebookLink: '',
   vkLink: '',
-  youtubeLink: ''
+  youtubeLink: '',
+  gaTrackingId: '',
+  gaProduction: false
 };

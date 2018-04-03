@@ -22,9 +22,10 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public editPostForm: FormGroup;
   public tagsFormArray: FormArray;
-  // public post: any;
   public postId: string;
   public savedPost: any;
+
+  public postReadingTime: number = null;
 
   public quill: any;
 
@@ -81,8 +82,13 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
       this.editPostForm.patchValue({
         text: this.quill.getContents()
       });
+      this.countReadingTime();
     });
 
+  }
+
+  countReadingTime() {
+    this.postReadingTime = Math.ceil(this.quill.getLength() / 1500);
   }
 
   getPost(id: string): void {
@@ -105,6 +111,7 @@ export class EditPostComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.quill.setContents(post.text);
     this.setTags(post.tags);
+    this.countReadingTime();
     this.editMode = !this.editPostForm.valid;
   }
 

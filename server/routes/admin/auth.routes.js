@@ -8,7 +8,7 @@ const {
   verifyPassword
 } = require('../../helpers/auth');
 
-const c = require('../../config');
+const c = require('../../config/config');
 
 const errorHandler = require('../../helpers/error-handler');
 const resMessages = require('../../helpers/res-messages');

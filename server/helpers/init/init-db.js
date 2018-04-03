@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 
-const c = require('../../config');
+const c = require('../../config/config');
 const viewsObj = require('./views');
 
 const {

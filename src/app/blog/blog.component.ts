@@ -10,6 +10,7 @@ import { BlogService } from './blog.service';
 import { BlogTitleService } from '../core/blog-title.service';
 import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs/Subscription';
+import { GoogleAnalyticsService } from '../core/google-analytics.service';
 
 @Component({
   templateUrl: 'blog.component.html'
@@ -26,7 +27,10 @@ export class BlogComponent implements OnInit, OnDestroy {
   private mdMatchMedia = `(min-width: ${this.env.mdMinScreenWidth}px) and (max-width: ${this.env.lgMinScreenWidth - 0.02}px)`;
   private smMatchMedia = `(max-width: ${this.env.mdMinScreenWidth - 0.02}px)`;
 
-  constructor(public blogService: BlogService, public route: ActivatedRoute, public blogTitleService: BlogTitleService) { }
+  constructor(public blogService: BlogService,
+    public route: ActivatedRoute,
+    public blogTitleService: BlogTitleService,
+    public googleAnalyticsService: GoogleAnalyticsService) { }
 
   ngOnInit() {
     this.registerResizeEvent();
@@ -38,6 +42,7 @@ export class BlogComponent implements OnInit, OnDestroy {
         this.blogService.emptyPosts();
         this.blogService.getPosts();
       }
+      this.googleAnalyticsService.sendPageView(`/${this.blogService.currentTag ? 'tag/' + this.blogService.currentTag : ''}`);
     });
   }
 

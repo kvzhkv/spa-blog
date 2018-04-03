@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const rp = require('request-promise');
 
-const c = require('../config');
+const c = require('../config/config');
 
 const errorHandler = require('../helpers/error-handler');
 
@@ -90,6 +90,18 @@ router.get('/posts/:id', function (req, res) {
     res.status(errorHandler.getStatus(error)).send(errorHandler.getBody(error));
   });
 });
+
+// router.get('/stat', function (req, res) {
+
+//   fetchReport().then(data => {
+//     res.send({
+//       message: data
+//     });
+//   }).catch(error => {
+//     console.log(error)
+//     res.status(404).send(error);
+//   });
+// });
 
 // router.get('/tags', function (req, res, next) {
 //   rp.get({

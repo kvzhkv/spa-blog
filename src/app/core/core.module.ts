@@ -1,11 +1,8 @@
-import { NgModule, Optional, SkipSelf, LOCALE_ID } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import localeRu from '@angular/common/locales/ru';
-
-registerLocaleData(localeRu);
 
 import { LoadingBarComponent } from './loading-bar/loading-bar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -20,6 +17,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BlogTitleService } from './blog-title.service';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { ConfirmService } from './confirm/confirm.service';
+import { GoogleAnalyticsService } from './google-analytics.service';
 
 @NgModule({
   imports: [
@@ -46,11 +44,11 @@ import { ConfirmService } from './confirm/confirm.service';
   ],
   providers: [
     NavbarService,
+    GoogleAnalyticsService,
     LoadingBarService,
     MessagesService,
     ConfirmService,
     BlogTitleService,
-    { provide: LOCALE_ID, useValue: 'ru-RU' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,

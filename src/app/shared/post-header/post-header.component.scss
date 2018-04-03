@@ -1,3 +1,5 @@
+@import '~app/variables';
+
 .b-postview-info {
   text-align: left;
   font-size: 11px;
@@ -18,4 +20,10 @@
     color: #d79c6a;
     }
   }
+}
+
+.b-icon-sector {
+  border-left: 1px solid $lines-color;
+  margin-left: 7px;
+  padding-left: 9px;
 }

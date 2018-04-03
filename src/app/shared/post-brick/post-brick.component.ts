@@ -11,7 +11,13 @@ export class PostBrickComponent implements OnInit {
   @Input() post: any;
   @Input() id: string;
 
+  public readingTime: number = null;
+
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.post.length) {
+      this.readingTime = Math.ceil(this.post.length / 1500);
+    }
+  }
 }

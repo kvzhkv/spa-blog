@@ -16,9 +16,17 @@
     </h3>
   </a>
   <div class="b-text-cut">
-    <!-- <a routerLink="/posts/{{id}}"> -->
-      {{post.cut}}
-    <!-- </a> -->
+    {{post.cut}}
   </div>
-  <div class="b-post-date">{{post.date | date:'mediumDate'}}</div>
+  <div class="b-post-info">
+    <span>
+      {{post.date | date: 'mediumDate'}}
+    </span>
+    <span *ngIf="post.length" class="b-icon-sector">
+      <i class="far fa-clock fa-lg"></i> {{readingTime}} min
+    </span>
+    <span>
+
+    </span>
+  </div>
 </div>

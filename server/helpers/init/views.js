@@ -6,6 +6,12 @@ module.exports = [
       posts: {
         map: function (doc) {
           if (doc.type === 'post') {
+            var length = 0;
+            var text = '';
+            doc.post.text.ops.forEach(function(item) {
+              text = text + item.insert;
+            });
+            length = text.length;
             if (doc.post.cut) {
               emit(doc.post.date, {
                 type: doc.type,
@@ -15,7 +21,8 @@ module.exports = [
                   imageUrl: doc.post.imageUrl,
                   cut: doc.post.cut,
                   date: doc.post.date,
-                  tags: doc.post.tags
+                  tags: doc.post.tags,
+                  length: length
                 }
               });
             } else {
@@ -38,7 +45,8 @@ module.exports = [
                   imageUrl: doc.post.imageUrl,
                   cut: cut,
                   date: doc.post.date,
-                  tags: doc.post.tags
+                  tags: doc.post.tags,
+                  length: length
                 }
               });
             }
@@ -54,13 +62,20 @@ module.exports = [
       posts: {
         map: function (doc) {
           if (doc.type === 'post' && doc.published) {
+            var length = 0;
+            var text = '';
+            doc.post.text.ops.forEach(function(item) {
+              text = text + item.insert;
+            });
+            length = text.length;
             if (doc.post.cut) {
               emit(doc.post.date, {
                 title: doc.post.title,
                 imageUrl: doc.post.imageUrl,
                 cut: doc.post.cut,
                 date: doc.post.date,
-                tags: doc.post.tags
+                tags: doc.post.tags,
+                length: length
               });
             } else {
               var i = 0;
@@ -79,7 +94,8 @@ module.exports = [
                 imageUrl: doc.post.imageUrl,
                 cut: cut,
                 date: doc.post.date,
-                tags: doc.post.tags
+                tags: doc.post.tags,
+                length: length
               });
             }
           }
@@ -97,31 +113,24 @@ module.exports = [
           return sum(values);
         }
       },
-      // favorites: {
-      //   map: function (doc) {
-      //     if (doc.type === "post" && doc.published) {
-      //       doc.post.tags.forEach(function (tag) {
-      //         if (tag === "★") {
-      //           emit(doc.post.date, {
-      //             title: doc.post.title,
-      //             imageUrl: doc.post.imageUrl
-      //           });
-      //         }
-      //       });
-      //     }
-      //   }
-      // },
       postsbytags: {
         map: function (doc) {
           if (doc.type === 'post' && doc.published) {
             doc.post.tags.forEach(function (tag) {
+              var length = 0;
+              var text = '';
+              doc.post.text.ops.forEach(function (item) {
+                text = text + item.insert;
+              });
+              length = text.length;
               if (doc.post.cut) {
                 emit([tag, doc.post.date], {
                   title: doc.post.title,
                   imageUrl: doc.post.imageUrl,
                   cut: doc.post.cut,
                   date: doc.post.date,
-                  tags: doc.post.tags
+                  tags: doc.post.tags,
+                  length: length
                 });
               } else {
                 var i = 0;
@@ -136,7 +145,8 @@ module.exports = [
                   imageUrl: doc.post.imageUrl,
                   cut: cut,
                   date: doc.post.date,
-                  tags: doc.post.tags
+                  tags: doc.post.tags,
+                  length: length
                 });
               }
             });

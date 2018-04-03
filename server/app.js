@@ -20,7 +20,7 @@ const adminMediaRoutes = require('./routes/admin/media-manager.routes');
 
 const initMinio = require('./helpers/init/init-minio');
 const initDb = require('./helpers/init/init-db');
-const c = require('./config');
+const c = require('./config/config');
 
 const app = express();
 

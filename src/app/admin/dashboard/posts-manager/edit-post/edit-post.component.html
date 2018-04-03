@@ -14,7 +14,7 @@
     </div>
     <!-- PREVIEW MODE -->
     <div *ngIf="!editMode">
-      <blog-post-header [title]="editPostForm.controls.title.value" [tags]="editPostForm.controls.tags.value" [date]="editPostForm.controls.date.value"></blog-post-header>
+      <blog-post-header [title]="editPostForm.controls.title.value" [readingTime]="postReadingTime" [tags]="editPostForm.controls.tags.value" [date]="editPostForm.controls.date.value"></blog-post-header>
       <div *ngIf="editPostForm.controls.cut.value" class="b-cut-preview">
         {{editPostForm.controls.cut.value}}
       </div>

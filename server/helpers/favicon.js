@@ -3,7 +3,7 @@ const parseUrl = require('parseurl');
 
 const rp = require('request-promise');
 
-const c = require('../config');
+const c = require('../config/config');
 
 const EXP_TIME = 60 * 60 * 24 * 30 * 1000; // 30 days
 

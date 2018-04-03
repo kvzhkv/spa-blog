@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const Minio = require('minio');
 
-const c = require('../../config');
+const c = require('../../config/config');
 
 const minioClient = new Minio.Client({
   endPoint: c.minioEndPoint,
